@@ -42,6 +42,8 @@ export default {
   height: 100vh;
 }
 .panel--data {
+  height: 100vh;
+  overflow: scroll;
   flex: 1;
   &__title {
     height: 3.5rem;
