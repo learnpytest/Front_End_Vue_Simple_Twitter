@@ -2,7 +2,7 @@
   <LoginForm>
     <template v-slot:header> 後台登入 </template>
     <template v-slot:login>
-      <router-link class="link--login" :to="{ name: 'admin-login' }"
+      <router-link class="link--login" :to="{ name: 'user-login' }"
         >前台登入</router-link
       >
     </template>

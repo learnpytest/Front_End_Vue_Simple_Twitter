@@ -70,9 +70,16 @@ const actions = {
     ) {
       console.log(state.loginInfo);
       dispatch(SET_CURRENT_USER, dummyUserAdmin);
+      dispatch(SET_LOGIN_INFO, {
+        email: "",
+        password: "",
+      });
       vm.$router.push("/admin/tweets");
+      setTimeout(() => {
+        alert("SUCCESSFULLY LOGGED IN BACKEND");
+      }, 1000);
     } else {
-      console.log("login failed");
+      alert("Please enter valid email and password");
     }
   },
 };

@@ -8,7 +8,7 @@
       <div class="panel--data__title">推文清單</div>
       <div class="tweets">
         <!-- todo get real tweets and use v-for to render all tweets then pass id as prop to tweet card to run delete function -->
-        <AdminTweet />
+        <AdminTweet v-for="i in 10" :key="i" />
       </div>
     </div>
   </div>

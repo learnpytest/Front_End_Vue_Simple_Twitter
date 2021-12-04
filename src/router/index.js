@@ -1,9 +1,16 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "../store";
-import {
-  SET_CURRENT_USER
-} from "../store/store-types";
+
+const authenticateIsAdmin = (to, from, next) => {
+  const currentUser = store.state.user.currentUser;
+  if (currentUser && !currentUser.isAdmin) {
+    alert("PERSSION DENIED");
+    // next("PERSSION DENIED");
+    next("/admin/login");
+  }
+  next();
+};
 
 Vue.use(VueRouter);
 
@@ -25,30 +32,24 @@ const routes = [{
     path: "/admin/users",
     name: "admin-users-list",
     component: () => import("@/views/AdminUsers"),
+    beforeEnter: authenticateIsAdmin,
   },
   {
     path: "/admin/tweets",
     name: "admin-tweet-list",
     component: () => import("@/views/AdminMain"),
+    beforeEnter: authenticateIsAdmin,
   },
   {
     path: "/",
-    name: "home",
+    name: "root",
+    redirect: "/login",
   },
 ];
 
 const router = new VueRouter({
   linkExactActiveClass: "active",
   routes,
-});
-
-router.beforeEach((to, from, next) => {
-  // 已經登入以後
-  // 在這個地方要使用vuex要import store
-  console.log("beforeEach", to, from);
-  store.dispatch(SET_CURRENT_USER);
-  // 等取得現在使用者資料再用commit存好當前使用者
-  next();
 });
 
 export default router;
