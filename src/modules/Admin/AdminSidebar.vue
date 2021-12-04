@@ -8,17 +8,27 @@
       />
     </div>
     <router-link class="menu__item" :to="{ name: 'admin-tweet-list' }">
-      <span class="menu__icon"></span>
+      <img
+        src="@/assets/images/icon_index.svg"
+        class="menu__image filter-orange"
+      />
       <span class="menu__txt"> 推文清單 </span>
     </router-link>
     <!-- todo will need to adjust icon with svg to fit different usage case such as hover or active -->
     <router-link class="menu__item" :to="{ name: 'admin-users-list' }">
-      <img class="menu__image" src="@/assets/images/icon_user.png" />
+      <img
+        class="menu__image filter-orange"
+        src="@/assets/images/icon_user.svg"
+      />
       <span class="menu__txt"> 使用者列表 </span>
     </router-link>
 
     <div class="menu__item menu__action" @click="logout">
-      <img class="menu__image" src="@/assets/images/icon_logout.svg" alt="" />
+      <img
+        class="menu__image filter-orange"
+        src="@/assets/images/icon_logout.svg"
+        alt=""
+      />
       <span>登出</span>
     </div>
   </menu>
@@ -71,11 +81,12 @@ export default {
     padding: 0.1rem;
 
     &.active {
-      .menu__icon {
-        background-image: url("../../assets/images/icon_index_vector.svg");
-      }
       .menu__txt {
         @include theme-colors(color, primary);
+      }
+      .filter-orange {
+        filter: invert(43%) sepia(89%) saturate(2516%) hue-rotate(1deg)
+          brightness(102%) contrast(106%);
       }
     }
     &:hover {
@@ -83,6 +94,10 @@ export default {
       color: $orange-200;
       .menu__txt {
         color: $orange-200;
+      }
+      .filter-orange {
+        filter: invert(35%) sepia(86%) saturate(4434%) hue-rotate(5deg)
+          brightness(105%) contrast(106%);
       }
     }
     &--logo {

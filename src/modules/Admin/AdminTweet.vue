@@ -14,7 +14,8 @@
         </div>
         <div class="tweet__delete">
           <img
-            src="@/assets/images/icon_close_gray.png"
+            class="filter-orange"
+            src="@/assets/images/icon_close_gray.svg"
             alt="delete tweet button"
           />
         </div>
@@ -65,6 +66,12 @@ export default {
   &__delete {
     width: 1.5rem;
     height: 1.5rem;
+    &:hover {
+      .filter-orange {
+        filter: invert(35%) sepia(86%) saturate(4434%) hue-rotate(5deg)
+          brightness(105%) contrast(106%);
+      }
+    }
   }
 
   &__content {
