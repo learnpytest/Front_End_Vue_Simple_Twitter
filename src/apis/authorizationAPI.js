@@ -1,6 +1,6 @@
 import {
   apiHelper
-} from "../utils/helpers";
+} from "../apis/apiHelper";
 
 export default {
   signIn({

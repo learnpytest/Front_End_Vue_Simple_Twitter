@@ -5,7 +5,8 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 
-new Vue({
+// change for routing
+export const vm = new Vue({
   router,
   store,
   render: (h) => h(App),

@@ -1,6 +1,17 @@
-// todo this is initial dummy data
+// need to use this for real sign in
+// import authorizationAPI from "../../apis/authorizationAPI";
+
 import {
-  dummyCurrentUser
+  vm
+} from "../../main";
+
+// todo this is initial dummy data
+// import {
+//   dummyCurrentUser
+// } from "../../data/dummyUsers";
+// 使用dummy data當作從api取回來的當前使用者
+import {
+  dummyUserAdmin
 } from "../../data/dummyUsers";
 
 // import axios from "axios";
@@ -35,11 +46,34 @@ const actions = {
   },
 
   [POST_LOGIN]: async ({
+    state,
     dispatch
   }) => {
     // todo request login api with state.email, state.password
-    // if success set current user
-    dispatch(SET_CURRENT_USER, dummyCurrentUser);
+    // if success set current user, save token to localstorage
+    // write first start
+    // authorizationAPI.signIn({email:state.loginInfo.email, password:state.loginInfo.password}).then(res =>{
+    //   const {data, statusText} = res
+    // if(statusText !=="OK" || data.status !== 'success'){throw new Error(statusText)}
+    // 假設成功登入，應該得到使用者資料，先存好token, 將使用者資料放入另一個action，再用mutation修改現在使用者，更新現在使用者，然後轉址
+    //   localStorage.setItem('simple-twitter-token', data.token)
+    //    dispatch(SET_CURRENT_USER, dummyCurrentUser);
+    //  vm.$router.push("/admin/tweets");
+    // })
+    // end
+    // dispatch(SET_CURRENT_USER, dummyCurrentUser);
+
+    // 暫時在這裡測試
+    if (
+      state.loginInfo.email === "root@example.com" &&
+      state.loginInfo.password === "12345678"
+    ) {
+      console.log(state.loginInfo);
+      dispatch(SET_CURRENT_USER, dummyUserAdmin);
+      vm.$router.push("/admin/tweets");
+    } else {
+      console.log("login failed");
+    }
   },
 };
 const mutations = {
