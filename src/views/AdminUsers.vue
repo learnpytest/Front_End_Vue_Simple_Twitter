@@ -1,7 +1,9 @@
 <template>
   <div class="container--horizontal">
     <!-- this side bar will need to be replaced with actual one -->
-    <div class="sidebar">sidebar</div>
+    <div class="sidebar sidebar--admin">
+      <AdminSidebar />
+    </div>
     <div class="panel--data">
       <div class="panel--data__title">使用者列表</div>
       <div class="cards">
@@ -12,11 +14,13 @@
 </template>
 
 <script>
+import AdminSidebar from "@/modules/Admin/AdminSidebar.vue";
 import AdminUserCard from "@/views/AdminUserCard.vue";
 
 export default {
   name: "AdminUsers",
   components: {
+    AdminSidebar,
     AdminUserCard,
   },
 };
@@ -31,7 +35,10 @@ export default {
   width: 100%;
 }
 .sidebar {
-  width: 20%;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 .panel--data {
   flex: 1;
