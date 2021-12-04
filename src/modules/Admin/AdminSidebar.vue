@@ -17,15 +17,27 @@
       <span class="menu__txt"> 使用者列表 </span>
     </router-link>
 
-    <div class="menu__item menu__action">
+    <div class="menu__item menu__action" @click="logout">
       <img class="menu__image" src="@/assets/images/icon_logout.svg" alt="" />
       <span>登出</span>
     </div>
   </menu>
 </template>
 <script>
+import { mapActions } from "vuex";
+import { REVOKE_AUTHENTICATION } from "@/store/store-types";
+
 export default {
   name: "AdminSidebar",
+  methods: {
+    ...mapActions({
+      revokeAuthentication: REVOKE_AUTHENTICATION,
+    }),
+    logout() {
+      this.revokeAuthentication();
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
 
