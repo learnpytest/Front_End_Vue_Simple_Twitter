@@ -28,7 +28,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="#2">
+        <router-link :to="{ name: 'user-setting' }">
           <div class="nav-link">
             <img src="./../../assets/images/icon_cog.svg" alt="" />
             <p class="nav-link_text">設定</p>

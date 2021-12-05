@@ -44,6 +44,7 @@ const routes = [{
     name: "register",
     component: () => import("@/views/UserRegister"),
   },
+
   {
     path: "/admin/login",
     name: "admin-login",
@@ -68,8 +69,8 @@ const routes = [{
     beforeEnter: authenticateIsLoggedinUser,
   },
   {
-    path: "/usersetting",
-    name: "UserSetting",
+    path: "/user/setting",
+    name: "user-setting",
     component: () => import("@/views/UserSetting"),
   },
   {

@@ -25,25 +25,26 @@
 </template>
 
 <script>
+import Sidebar from "../modules/user/Sidebar.vue";
 import AccountForm from "@/components/AccountForm";
 import PrimaryButtonSmall from "@/components/Buttons/PrimaryButtonSmall.vue";
+
 import { mapActions } from "vuex";
-import { POST_USER_LOGIN } from "../store/store-types";
-import Sidebar from "../modules/user/Sidebar.vue";
+import { PUT_ACCOUNT } from "../store/store-types";
 
 export default {
-  name: "UserLogin",
+  name: "UserSetting",
   components: {
     AccountForm,
     PrimaryButtonSmall,
     Sidebar,
   },
   methods: {
-    register() {
-      this.postUserLogin();
+    saveUserSetting() {
+      this.putAccount();
     },
     ...mapActions({
-      postUserLogin: POST_USER_LOGIN,
+      putAccount: PUT_ACCOUNT,
     }),
   },
 };

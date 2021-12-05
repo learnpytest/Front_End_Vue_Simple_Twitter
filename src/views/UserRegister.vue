@@ -32,7 +32,7 @@ import { mapActions } from "vuex";
 import { POST_ACCOUNT } from "../store/store-types";
 
 export default {
-  name: "UserLogin",
+  name: "UserRegister",
   components: {
     AccountForm,
     PrimaryButtonLarge,

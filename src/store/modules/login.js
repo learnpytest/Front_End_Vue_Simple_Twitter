@@ -47,6 +47,7 @@ const actions = {
       alert("PLEASE ENTER EMAIL AND PASSWORD");
       return;
     }
+
     const res = await authorizationAPI.usersSignIn({
       email,
       password,
