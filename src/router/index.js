@@ -29,8 +29,7 @@ const authenticateIsLoggedinUser = (to, from, next) => {
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
+const routes = [{
     path: "/reply",
     name: "reply-list",
     component: () => import("@/views/ReplyList"),
@@ -43,6 +42,7 @@ const routes = [
   {
     path: "/register",
     name: "register",
+    component: () => import("@/views/UserRegister"),
   },
   {
     path: "/admin/login",

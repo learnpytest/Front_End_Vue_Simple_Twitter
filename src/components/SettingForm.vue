@@ -16,7 +16,35 @@
         name="account"
         :class="['form__input']"
         v-model="account"
-        @input="updateLoginInfo"
+        @input="updateSettingInfo"
+      />
+      <div>
+        <!-- todo error message -->
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="username">名稱</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        :class="['form__input']"
+        v-model="username"
+        @input="updateSettingInfo"
+      />
+      <div>
+        <!-- todo error message -->
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        :class="['form__input']"
+        v-model="email"
+        @input="updateSettingInfo"
       />
       <div>
         <!-- todo error message -->
@@ -30,17 +58,29 @@
         name="password"
         :class="['form__input']"
         v-model="password"
-        @input="updateLoginInfo"
+        @input="updateSettingInfo"
       />
       <div>
         <!-- todo error message -->
       </div>
     </div>
-
-    <slot name="button"></slot>
+    <div class="form__group">
+      <label for="passwordCheck">確認密碼</label>
+      <input
+        type="password"
+        id="passwordCheck"
+        name="passwordCheck"
+        :class="['form__input']"
+        v-model="passwordCheck"
+        @input="updateSettingInfo"
+      />
+      <div>
+        <!-- todo error message -->
+      </div>
+    </div>
+    <slot name="register"></slot>
     <div class="form__links">
-      <slot name="register"></slot>
-      <slot name="login"></slot>
+      <slot name="cancel"></slot>
     </div>
   </form>
 </template>
@@ -52,15 +92,14 @@ export default {
   name: "LoginForm",
   data() {
     return {
-      account: "",
+      email: "",
       password: "",
     };
   },
 
   methods: {
-    // need to rename email to account and change vuex rename email to account
     updateLoginInfo() {
-      this.setLoginInfo({ email: this.account, password: this.password });
+      this.setLoginInfo({ email: this.email, password: this.password });
     },
     ...mapActions({
       setLoginInfo: SET_LOGIN_INFO,
@@ -76,7 +115,7 @@ export default {
 .form {
   font-family: var(--ff-primary);
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,15 +131,14 @@ export default {
     font-weight: var(--fw-bold);
   }
   &__logo {
+    margin-bottom: 1rem;
     width: 3rem;
     height: 3rem;
   }
-  &__group,
-  &__links {
+
+  &__group {
     width: 540px;
     max-width: 70%;
-  }
-  &__group {
     margin-bottom: 1.9rem;
     @include grays(color, g-600);
     font-size: 1rem;
@@ -122,11 +160,13 @@ export default {
     @include grays(border-color, g-600);
     background-color: $gray-50;
   }
-
+  &__btn {
+    margin-bottom: 1.3rem;
+  }
   &__links {
-    margin-top: 1.25rem;
     display: flex;
     justify-content: flex-end;
+    padding-bottom: 5rem;
     .link--login {
       @include grays(color, b-1000);
       font-weight: var(--fw-bold);
