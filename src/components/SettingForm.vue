@@ -78,7 +78,7 @@
         <!-- todo error message -->
       </div>
     </div>
-    <slot name="register"></slot>
+    <slot name="button"></slot>
     <div class="form__links">
       <slot name="cancel"></slot>
     </div>

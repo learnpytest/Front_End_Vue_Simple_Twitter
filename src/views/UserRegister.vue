@@ -2,7 +2,7 @@
   <div class="view--setting">
     <SettingForm>
       <template v-slot:header> 建立你的帳號 </template>
-      <template v-slot:register
+      <template v-slot:button
         ><PrimaryButtonLarge
           class="form__btn"
           @click.native.prevent.stop="register"
