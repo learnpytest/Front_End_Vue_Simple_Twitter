@@ -62,15 +62,20 @@ const routes = [{
     beforeEnter: authenticateIsAdmin,
   },
   {
-    path: "/",
-    name: "root",
-    redirect: "/login",
-  },
-  {
     path: "/usermain",
     name: "UserMain",
     component: () => import("@/views/UserMain"),
     beforeEnter: authenticateIsLoggedinUser,
+  },
+  {
+    path: "/usersetting",
+    name: "UserSetting",
+    component: () => import("@/views/UserSetting"),
+  },
+  {
+    path: "/",
+    name: "root",
+    redirect: "/login",
   },
 ];
 

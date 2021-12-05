@@ -1,6 +1,13 @@
 <template>
   <div class="view--setting">
-    <SettingForm>
+    <AccountForm>
+      <template v-slot:logo>
+        <img
+          class="form__logo"
+          src="../assets/images/Logo_small.png"
+          alt="logo"
+        />
+      </template>
       <template v-slot:header> 建立你的帳號 </template>
       <template v-slot:button
         ><PrimaryButtonLarge
@@ -14,12 +21,12 @@
           >取消</router-link
         >
       </template>
-    </SettingForm>
+    </AccountForm>
   </div>
 </template>
 
 <script>
-import SettingForm from "@/components/SettingForm";
+import AccountForm from "@/components/AccountForm";
 import PrimaryButtonLarge from "@/components/Buttons/PrimaryButtonLarge.vue";
 import { mapActions } from "vuex";
 import { POST_USER_LOGIN } from "../store/store-types";
@@ -27,7 +34,7 @@ import { POST_USER_LOGIN } from "../store/store-types";
 export default {
   name: "UserLogin",
   components: {
-    SettingForm,
+    AccountForm,
     PrimaryButtonLarge,
   },
   methods: {
@@ -44,11 +51,12 @@ export default {
 .view--setting {
   height: 100%;
 }
-.dot {
-  font-weight: var(--fw-normal);
-  width: 0.5rem;
-  display: inline-block;
-  text-align: center;
-  color: var(--b-1000);
+.form__logo {
+  margin-bottom: 1rem;
+  width: 3rem;
+  height: 3rem;
+}
+.form__btn {
+  max-width: 540px;
 }
 </style>

@@ -1,11 +1,10 @@
 <template>
   <form class="form">
+    <div class="form__title">
+      <slot name="title"></slot>
+    </div>
     <div class="form__header">
-      <img
-        class="form__logo"
-        src="../assets/images/Logo_small.png"
-        alt="logo"
-      />
+      <slot name="logo"> </slot>
       <slot name="header"></slot>
     </div>
     <div class="form__group">
@@ -98,7 +97,7 @@ export default {
   },
 
   methods: {
-    updateLoginInfo() {
+    updateSettingInfo() {
       this.setLoginInfo({ email: this.email, password: this.password });
     },
     ...mapActions({
@@ -114,12 +113,19 @@ export default {
 
 .form {
   font-family: var(--ff-primary);
-  width: 100%;
+  margin: 0 auto;
+  max-width: 540px;
+  // width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 4rem;
+
+  &__title {
+    width: 100%;
+    padding: 0.8rem 0 0 0;
+  }
   &__header {
     display: flex;
     flex-direction: column;
@@ -130,15 +136,11 @@ export default {
     font-size: 1.5rem;
     font-weight: var(--fw-bold);
   }
-  &__logo {
-    margin-bottom: 1rem;
-    width: 3rem;
-    height: 3rem;
-  }
 
   &__group {
-    width: 540px;
-    max-width: 70%;
+    // width: 540px;
+    // max-width: 70%;
+    width: 100%;
     margin-bottom: 1.9rem;
     @include grays(color, g-600);
     font-size: 1rem;

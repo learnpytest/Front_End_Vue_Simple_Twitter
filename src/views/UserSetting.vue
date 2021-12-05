@@ -1,0 +1,99 @@
+<template>
+  <div class="container">
+    <div class="usermain">
+      <div class="sidebar"><Sidebar /></div>
+      <div class="main">
+        <div class="tweets">
+          <AccountForm class="form">
+            <template v-slot:title>
+              <span class="form__txt">帳號設定</span>
+            </template>
+            <template v-slot:button>
+              <div class="to-right">
+                <PrimaryButtonSmall
+                  class="form__btn"
+                  @click.native.prevent.stop="saveUserSetting"
+                  >儲存
+                </PrimaryButtonSmall>
+              </div>
+            </template>
+          </AccountForm>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import AccountForm from "@/components/AccountForm";
+import PrimaryButtonSmall from "@/components/Buttons/PrimaryButtonSmall.vue";
+import { mapActions } from "vuex";
+import { POST_USER_LOGIN } from "../store/store-types";
+import Sidebar from "../modules/user/Sidebar.vue";
+
+export default {
+  name: "UserLogin",
+  components: {
+    AccountForm,
+    PrimaryButtonSmall,
+    Sidebar,
+  },
+  methods: {
+    register() {
+      this.postUserLogin();
+    },
+    ...mapActions({
+      postUserLogin: POST_USER_LOGIN,
+    }),
+  },
+};
+</script>
+<style lang="scss" scoped>
+@import "./src/assets/scss/main.scss";
+
+.new-tweet-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: 100%;
+}
+.usermain {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  height: 100vh;
+}
+.container {
+  height: 100%;
+}
+.sidebar {
+  width: 18%;
+}
+.main {
+  width: 42%;
+  height: 100%;
+  margin: 0 30px;
+  margin-right: calc(25% + 30px);
+  border: 1px solid $gray-75;
+}
+.form {
+  max-width: 642px;
+  margin: 0;
+  &__txt {
+    @include grays(color, g-900);
+    font-weight: var(--fw-bold);
+  }
+  &__group {
+    width: 642px;
+  }
+}
+
+.to-right {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+</style>
