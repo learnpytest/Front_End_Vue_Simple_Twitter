@@ -5,16 +5,6 @@ import {
   vm
 } from "../../main";
 
-// todo this is initial dummy data
-// import {
-//   dummyCurrentUser
-// } from "../../data/dummyUsers";
-// 使用dummy data當作從api取回來的當前使用者
-// import {
-//   dummyUserAdmin
-// } from "../../data/dummyUsers";
-
-// import axios from "axios";
 import {
   GET_LOGIN_INFO,
   SET_LOGIN_INFO,
@@ -75,25 +65,6 @@ const actions = {
     commit(SET_CURRENT_USER, data.user);
     vm.$router.push("/usermain");
     console.log("userlog");
-
-    //  暫時在這裡測試
-    // if (
-    //   state.loginInfo.email === "user@example.com" &&
-    //   state.loginInfo.password === "12345678"
-    // ) {
-    //   console.log(state.loginInfo);
-    //   dispatch(SET_CURRENT_USER, dummyCurrentUser);
-    //   dispatch(SET_LOGIN_INFO, {
-    //     email: "",
-    //     password: "",
-    //   });
-    //   vm.$router.push("/usermain");
-    //   setTimeout(() => {
-    //     alert("SUCCESSFULLY LOGGED IN YOUR MAIN PAGE");
-    //   }, 1000);
-    // } else {
-    //   alert("Please enter valid email and password");
-    // }
   },
 
   [POST_LOGIN]: async ({

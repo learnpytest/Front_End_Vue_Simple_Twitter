@@ -29,7 +29,7 @@
 import AccountForm from "@/components/AccountForm";
 import PrimaryButtonLarge from "@/components/Buttons/PrimaryButtonLarge.vue";
 import { mapActions } from "vuex";
-import { POST_USER_LOGIN } from "../store/store-types";
+import { POST_ACCOUNT } from "../store/store-types";
 
 export default {
   name: "UserLogin",
@@ -39,10 +39,10 @@ export default {
   },
   methods: {
     register() {
-      this.postUserLogin();
+      this.postAccount();
     },
     ...mapActions({
-      postUserLogin: POST_USER_LOGIN,
+      postAccount: POST_ACCOUNT,
     }),
   },
 };

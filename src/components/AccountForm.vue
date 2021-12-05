@@ -15,7 +15,7 @@
         name="account"
         :class="['form__input']"
         v-model="account"
-        @input="updateSettingInfo"
+        @input="updateAccountInfo"
       />
       <div>
         <!-- todo error message -->
@@ -29,7 +29,7 @@
         name="username"
         :class="['form__input']"
         v-model="username"
-        @input="updateSettingInfo"
+        @input="updateAccountInfo"
       />
       <div>
         <!-- todo error message -->
@@ -43,7 +43,7 @@
         name="email"
         :class="['form__input']"
         v-model="email"
-        @input="updateSettingInfo"
+        @input="updateAccountInfo"
       />
       <div>
         <!-- todo error message -->
@@ -57,21 +57,21 @@
         name="password"
         :class="['form__input']"
         v-model="password"
-        @input="updateSettingInfo"
+        @input="updateAccountInfo"
       />
       <div>
         <!-- todo error message -->
       </div>
     </div>
     <div class="form__group">
-      <label for="passwordCheck">確認密碼</label>
+      <label for="checkPassword">確認密碼</label>
       <input
         type="password"
-        id="passwordCheck"
-        name="passwordCheck"
+        id="checkPassword"
+        name="checkPassword"
         :class="['form__input']"
-        v-model="passwordCheck"
-        @input="updateSettingInfo"
+        v-model="checkPassword"
+        @input="updateAccountInfo"
       />
       <div>
         <!-- todo error message -->
@@ -86,22 +86,31 @@
 
 <script>
 import { mapActions } from "vuex";
-import { SET_LOGIN_INFO } from "../store/store-types";
+import { SET_ACCOUNT_INFO } from "../store/store-types";
+
 export default {
-  name: "LoginForm",
+  name: "AccountForm",
   data() {
     return {
+      account: "",
+      username: "",
       email: "",
       password: "",
+      checkPassword: "",
     };
   },
-
   methods: {
-    updateSettingInfo() {
-      this.setLoginInfo({ email: this.email, password: this.password });
+    updateAccountInfo() {
+      this.setAccountInfo({
+        account: this.account,
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        checkPassword: this.checkPassword,
+      });
     },
     ...mapActions({
-      setLoginInfo: SET_LOGIN_INFO,
+      setAccountInfo: SET_ACCOUNT_INFO,
     }),
   },
 };

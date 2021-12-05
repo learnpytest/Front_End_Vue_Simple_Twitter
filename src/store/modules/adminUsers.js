@@ -1,9 +1,4 @@
 import usersAPI from "../../apis/usersAPI";
-
-// import {
-//   vm
-// } from "../../main";
-
 import {
   GET_ALL_USERS,
   SET_ALL_USERS

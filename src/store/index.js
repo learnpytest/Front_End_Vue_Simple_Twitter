@@ -5,6 +5,7 @@ import login from "./modules/login";
 import user from "./modules/user";
 import tweet from "./modules/tweet";
 import adminUsers from "./modules/adminUsers";
+import userAccount from "./modules/userAccount";
 
 Vue.use(Vuex);
 
@@ -17,5 +18,6 @@ export default new Vuex.Store({
     user,
     tweet,
     adminUsers,
+    userAccount,
   },
 });

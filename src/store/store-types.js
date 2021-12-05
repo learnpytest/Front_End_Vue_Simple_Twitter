@@ -4,6 +4,10 @@ export const POST_LOGIN = "POST_LOGIN";
 export const POST_USER_LOGIN = "POST_USER_LOGIN";
 export const REVOKE_AUTHENTICATION = "REVOKE_AUTHENTICATION";
 
+export const GET_ACCOUNT_INFO = "GET_ACCOUNT_INFO";
+export const SET_ACCOUNT_INFO = "SET_ACCOUNT_INFO";
+export const POST_ACCOUNT = "POST_ACCOUNT";
+
 export const GET_ALL_TWEETS = "GET_ALL_TWEETS";
 export const SET_ALL_TWEETS = "SET_ALL_TWEETS";
 export const GET_TWEET = "GET_TWEET";
