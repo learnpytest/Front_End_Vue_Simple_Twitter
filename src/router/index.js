@@ -12,20 +12,20 @@ const authenticateIsAdmin = (to, from, next) => {
   next();
 };
 
-const authenticateIsLoggedinUser = (to, from, next) => {
-  const currentUser = store.state.user.currentUser;
-  if (currentUser && currentUser.account === "admin") {
-    alert("YOU ARE NOT LOGGEDIN YET");
-    // next("PERSSION DENIED");
-    next("/login");
-  } else if (currentUser && store.state.user.isAuthenticated) {
-    next();
-  } else {
-    alert("YOU ARE NOT LOGGEDIN YET");
-    // next("PERSSION DENIED");
-    next("/login");
-  }
-};
+// const authenticateIsLoggedinUser = (to, from, next) => {
+//   const currentUser = store.state.user.currentUser;
+//   if (currentUser && currentUser.account === "admin") {
+//     alert("YOU ARE NOT LOGGEDIN YET");
+//     // next("PERSSION DENIED");
+//     next("/login");
+//   } else if (currentUser && store.state.user.isAuthenticated) {
+//     next();
+//   } else {
+//     alert("YOU ARE NOT LOGGEDIN YET");
+//     // next("PERSSION DENIED");
+//     next("/login");
+//   }
+// };
 
 Vue.use(VueRouter);
 
@@ -71,7 +71,8 @@ const routes = [{
     path: "/usermain",
     name: "UserMain",
     component: () => import("@/views/UserMain"),
-    beforeEnter: authenticateIsLoggedinUser,
+    //要移回來
+    // beforeEnter: authenticateIsLoggedinUser,
   },
   {
     path: "/user/setting",

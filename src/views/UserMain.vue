@@ -37,69 +37,77 @@ import Sidebar from "../modules/user/Sidebar.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 
-const dummyData = {
-  users: [
-    {
-      id: 1,
-      name: "Jm Malik",
-      userId: "@jmmalik",
-      userImg: "",
-      followings: [
-        {
-          id: 10,
-          name: "Jeff Bezos",
-          userId: "@jeffbezos",
-          img: "",
-          isFollowed: true,
-        },
-        {
-          id: 11,
-          name: "Martin Loo",
-          userId: "@martinloo",
-          img: "",
-          isFollowed: true,
-        },
-        {
-          id: 12,
-          name: "Zeus",
-          userId: "@zeus",
-          img: "",
-          isFollowed: false,
-        },
-        {
-          id: 13,
-          name: "Key",
-          userId: "@key",
-          img: "",
-          isFollowed: true,
-        },
-      ],
-      followers: [
-        {
-          id: 20,
-          name: "Nando",
-          userId: "@nando",
-          img: "",
-          isFollowed: true,
-        },
-        {
-          id: 21,
-          name: "Sushi King",
-          userId: "@sushiking",
-          img: "",
-          isFollowed: true,
-        },
-        {
-          id: 22,
-          name: "Bawang",
-          userId: "@bawang",
-          img: "",
-          isFollowed: true,
-        },
-      ],
-    },
-  ],
-};
+// const dummyData = {
+//   users: [
+//     {
+//       id: 1,
+//       name: "Jm Malik",
+//       userId: "@jmmalik",
+//       userImg: "",
+//       followings: [
+//         {
+//           id: 10,
+//           name: "Jeff Bezos",
+//           userId: "@jeffbezos",
+//           img: "",
+//           isFollowed: true,
+//         },
+//         {
+//           id: 11,
+//           name: "Martin Loo",
+//           userId: "@martinloo",
+//           img: "",
+//           isFollowed: true,
+//         },
+//         {
+//           id: 12,
+//           name: "Zeus",
+//           userId: "@zeus",
+//           img: "",
+//           isFollowed: false,
+//         },
+//         {
+//           id: 13,
+//           name: "Key",
+//           userId: "@key",
+//           img: "",
+//           isFollowed: true,
+//         },
+//       ],
+//       followers: [
+//         {
+//           id: 20,
+//           name: "Nando",
+//           userId: "@nando",
+//           img: "",
+//           isFollowed: true,
+//         },
+//         {
+//           id: 21,
+//           name: "Sushi King",
+//           userId: "@sushiking",
+//           img: "",
+//           isFollowed: true,
+//         },
+//         {
+//           id: 22,
+//           name: "Bawang",
+//           userId: "@bawang",
+//           img: "",
+//           isFollowed: true,
+//         },
+//       ],
+//     },
+//   ],
+// };
+
+import { mapActions } from "vuex";
+
+import {
+  SET_TWEETS_FILTER_TYPE,
+  GET_ALL_TWEETS,
+  SET_ALL_TWEETS,
+} from "../store/store-types";
 
 export default {
   components: {
@@ -117,13 +125,21 @@ export default {
       users: [],
     };
   },
+  created() {
+    this.setTweetsFilterType({
+      getter: GET_ALL_TWEETS,
+      setter: SET_ALL_TWEETS,
+    });
+  },
 
   methods: {
-    fetchData() {
-      const { users, tweets } = dummyData;
-      this.users = users;
-      this.tweets = tweets;
-    },
+    ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
+
+    // fetchData() {
+    //   const { users, tweets } = dummyData;
+    //   this.users = users;
+    //   this.tweets = tweets;
+    // },
     modalToggle() {
       if (!this.showModal) {
         this.showModal = true;
