@@ -33,7 +33,7 @@ const getters = {
   [GET_ALL_TWEETS]: (state) => state.allTweets,
   [GET_ONE_USER_TWEETS]: (state) => state.oneUserTweets,
   [GET_ONE_USER_REPLIES]: (state) => state.oneUserReplies,
-  [GET_ONE_USER_LIKES]: (state) => state.onUserLikes,
+  [GET_ONE_USER_LIKES]: (state) => state.oenUserLikes,
 };
 const actions = {
   [SET_TWEETS_FILTER_TYPE]: async ({
@@ -133,8 +133,8 @@ const mutations = {
   [SET_ONE_USER_REPLIES]: (state, oneUserReplies) => {
     state.oneUserReplies = [...oneUserReplies];
   },
-  [SET_ONE_USER_LIKES]: (state, onUserLikes) => {
-    state.onUserLikes = [...onUserLikes];
+  [SET_ONE_USER_LIKES]: (state, oneUserLikes) => {
+    state.onUserLikes = [...oneUserLikes];
   },
 };
 
