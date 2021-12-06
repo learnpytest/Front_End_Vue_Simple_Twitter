@@ -64,34 +64,41 @@ const actions = {
       });
       return;
     }
-    //  request api
-    const res = await userAccountAPI.signUp({
-      account,
-      name,
-      email,
-      password,
-      checkPassword,
-    });
+    try {
+      //  request api
+      const res = await userAccountAPI.signUp({
+        account,
+        name,
+        email,
+        password,
+        checkPassword,
+      });
 
-    if (res.data.status !== "success") {
-      if (res.data.message === "Email has already existed!") {
-        dispatch(ADD_NOTIFICATION, {
-          type: "error",
-          message: "「email 已重覆註冊！」",
-        });
-        return;
+      if (res.data.status !== "success") {
+        if (res.data.message === "Email has already existed!") {
+          dispatch(ADD_NOTIFICATION, {
+            type: "error",
+            message: "「email 已重覆註冊！」",
+          });
+          return;
+        }
+        if (res.data.message === "Account has already existed!") {
+          dispatch(ADD_NOTIFICATION, {
+            type: "error",
+            message: "「account 已重覆註冊！」",
+          });
+          return;
+        }
       }
-      if (res.data.message === "Account has already existed!") {
-        dispatch(ADD_NOTIFICATION, {
-          type: "error",
-          message: "「account 已重覆註冊！」",
-        });
-        return;
-      }
-      throw new Error(res.data.message);
+      // todo 導向登入頁提示註冊成功
+      vm.$router.push("/login");
+      dispatch(ADD_NOTIFICATION, {
+        type: "success",
+        message: "成功註冊",
+      });
+    } catch (err) {
+      throw new Error(err);
     }
-    // todo 提示註冊成功再導向登入頁
-    vm.$router.push("/login");
   },
   [PUT_ACCOUNT]: async ({
     rootState,
@@ -117,7 +124,6 @@ const actions = {
       password,
       checkPassword,
     });
-    console.log("putaccountuser", res);
     const {
       data,
       statusText
