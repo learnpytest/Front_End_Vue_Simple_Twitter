@@ -9,14 +9,20 @@ import {
   SET_CURRENT_USER,
   REVOKE_AUTHENTICATION,
   ADD_NOTIFICATION,
+  GET_TOP_USERS,
+  SET_TOP_USERS,
 } from "../store-types";
 
 const state = {
   currentUser: {},
   isAuthenticated: false,
+  topUsers: [],
+  currentUserFollowers: [],
+  currentUserFollowings: [],
 };
 const getters = {
   [GET_CURRENT_USER]: (state) => state.currentUser,
+  [GET_TOP_USERS]: (state) => state.topUsers,
 };
 const actions = {
   [REVOKE_AUTHENTICATION]: async ({
@@ -55,6 +61,13 @@ const actions = {
 
     commit(SET_CURRENT_USER, currentUser);
   },
+  [SET_TOP_USERS]: async ({
+    commit
+  }, topUsers) => {
+    // send api
+    console.log("setTopUsers", topUsers);
+    commit(SET_TOP_USERS, topUsers);
+  },
 };
 const mutations = {
   [REVOKE_AUTHENTICATION]: async (state) => {
@@ -84,6 +97,10 @@ const mutations = {
       );
       return false;
     }
+  },
+  [SET_TOP_USERS]: async (state, topUsers) => {
+    state.topUsers = [...topUsers];
+    console.log("setTopUsers mutation");
   },
 };
 

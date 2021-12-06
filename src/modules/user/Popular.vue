@@ -23,6 +23,27 @@
     </div>
   </div>
 </template>
+<script>
+import { mapActions, mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
+// import { GET_TOP_USERS, SET_TOP_USERS } from "../../store/store-types";
+export default {
+  name: "Popular",
+  created() {
+    // this.setTopUsers()
+  },
+  methods: {
+    ...mapActions({
+      // setTopUsers:SET_TOP_USERS,
+    }),
+  },
+  computed: {
+    ...mapGetters({
+      // getTopUsers:GET_TOP_USERS
+    }),
+  },
+};
+</script>
 <style lang="scss" scoped>
 @import "./../../assets/scss/main.scss";
 .popular-wrapper {

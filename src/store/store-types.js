@@ -25,8 +25,29 @@ export const SET_ONE_USER_LIKES = "SET_ONE_USER_LIKES";
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
+export const GET_TOP_USERS = "GET_TOP_USERS";
+export const SET_TOP_USERS = "SET_TOP_USERS";
+
+// adminUsers.js
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const SET_ALL_USERS = "SET_ALL_USERS";
+
+// followship.js
+export const GET_CURRENT_USER_FOLLOWERS = "GET_CURRENT_USER_FOLLOWERS";
+export const SET_CURRENT_USER_FOLLOWERS = "SET_CURRENT_USER_FOLLOWERS";
+export const GET_CURRENT_USER_FOLLOWINGS = "GET_CURRENT_USER_FOLLOWINGS";
+export const SET_CURRENT_USER_FOLLOWINGS = "SET_CURRENT_USER_FOLLOWINGS";
+// 當前使用者追蹤其他人
+export const POST_FOLLOWSHIP = "POST_FOLLOWSHIP";
+// 當前使用者取消追蹤其他人
+export const DELETE_FOLLOWSHIP = "DELETE_FOLLOWSHIP";
+
+// likeship.js
+// 對推文新增Like
+export const POST_LIKE = "POST_LIKE";
+
+// 對推文刪除Like
+export const DELETE_LIKE = "DELETE_LIKE";
 
 export const GET_NOTIFICATION = "GET_NOTIFICATION";
 export const IS_NOTIFICATION_OPEN = "IS_NOTIFICATION_OPEN";

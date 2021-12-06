@@ -10,7 +10,7 @@
           <div class="tweet__account">
             @apple<span class="dot">&bull;</span>
           </div>
-          <div class="tweet__created">{{ tweet.createdAt }}</div>
+          <div class="tweet__created">{{ tweet.createdAt | fromNow }}</div>
         </div>
         <div class="tweet__delete">
           <img
@@ -28,9 +28,12 @@
 </template>
 
 <script>
+import { mixinFromNowFilters } from "../../utils/mixin";
+
 export default {
   name: "AdminTweet",
   props: ["tweet"],
+  mixins: [mixinFromNowFilters],
 };
 </script>
 

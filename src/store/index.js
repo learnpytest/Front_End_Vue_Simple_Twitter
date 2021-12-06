@@ -7,6 +7,8 @@ import tweet from "./modules/tweet";
 import adminUsers from "./modules/adminUsers";
 import userAccount from "./modules/userAccount";
 import notification from "./modules/notification";
+import followship from "./modules/followship";
+import likeship from "./modules/likeship";
 
 Vue.use(Vuex);
 
@@ -21,5 +23,7 @@ export default new Vuex.Store({
     adminUsers,
     userAccount,
     notification,
+    followship,
+    likeship,
   },
 });
