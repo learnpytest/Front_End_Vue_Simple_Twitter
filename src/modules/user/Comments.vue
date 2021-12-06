@@ -129,12 +129,6 @@ export default {
   name: "Comments",
   mixins: [mixinEmptyImage],
 
-  methods: {
-    getTweets() {
-      console.log("comments dispatch get tweets");
-      this.$store.dispatch(`${this.filterType.setter}`);
-    },
-  },
   computed: {
     ...mapGetters({
       tweets: GET_FILLTERED_TWEETS,

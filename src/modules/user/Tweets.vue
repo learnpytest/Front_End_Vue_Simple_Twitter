@@ -83,9 +83,6 @@ export default {
     };
   },
 
-  created() {
-    // this.getTweets();
-  },
   methods: {
     fetchData() {
       this.showReplyModal = this.initialShowReplyModal;
