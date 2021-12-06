@@ -1,4 +1,4 @@
-// import currentUserAPI from "../../apis/currentUserAPI";
+import usersAPI from "../../apis/usersAPI";
 
 import {
   vm
@@ -63,10 +63,22 @@ const actions = {
   },
   [SET_TOP_USERS]: async ({
     commit
-  }, topUsers) => {
+  }) => {
     // send api
-    console.log("setTopUsers", topUsers);
-    commit(SET_TOP_USERS, topUsers);
+    try {
+      const res = await usersAPI.getTop();
+      const {
+        data,
+        statusText
+      } = res;
+      if (statusText !== "OK") {
+        throw new Error(statusText);
+      }
+      console.log("setTopUsers", data);
+      commit(SET_TOP_USERS, data);
+    } catch (err) {
+      throw new Error(err);
+    }
   },
 };
 const mutations = {

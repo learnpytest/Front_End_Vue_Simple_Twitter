@@ -1,17 +1,21 @@
 ﻿<template>
   <div class="popular-wrapper">
     <div class="popular-header">Popular</div>
-    <div class="popular-card">
-      <img src="./../../assets/images/Photo_user1.png" alt="" />
+    <div class="popular-card" v-for="user in getTopUsers" :key="user.id">
+      <!-- todo user avatar可以產生空圖 -->
+      <img :src="user.avatar" alt="user avatar" />
       <div class="popular-card_info">
-        <p class="user-name">Pizza Hut</p>
-        <p class="user-info">@pizzahut</p>
+        <p class="user-name">{{ user.name }}</p>
+        <p class="user-info">@{{ user.account }}</p>
       </div>
-      <div class="follow-btn">
+      <div class="follow-btn" v-if="user.isFollowed">
         <button class="following-btn">正在跟隨</button>
       </div>
+      <div class="follow-btn" v-else>
+        <button class="follower-btn">跟隨</button>
+      </div>
     </div>
-    <div class="popular-card">
+    <!-- <div class="popular-card">
       <img src="./../../assets/images/Photo_user1.png" alt="" />
       <div class="popular-card_info">
         <p class="user-name">Pizza Hut</p>
@@ -20,26 +24,26 @@
       <div class="follow-btn">
         <button class="follower-btn">跟隨</button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-// import { mapGetters } from "vuex";
-// import { GET_TOP_USERS, SET_TOP_USERS } from "../../store/store-types";
+
+import { GET_TOP_USERS, SET_TOP_USERS } from "../../store/store-types";
 export default {
   name: "Popular",
   created() {
-    // this.setTopUsers()
+    this.setTopUsers();
   },
   methods: {
     ...mapActions({
-      // setTopUsers:SET_TOP_USERS,
+      setTopUsers: SET_TOP_USERS,
     }),
   },
   computed: {
     ...mapGetters({
-      // getTopUsers:GET_TOP_USERS
+      getTopUsers: GET_TOP_USERS,
     }),
   },
 };
