@@ -60,6 +60,8 @@
   </div>
 </template>
 <script>
+// need to take targeted user
+
 export default {
   props: {
     initialShowReplyModal: {

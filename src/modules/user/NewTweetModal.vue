@@ -12,11 +12,8 @@
       </div>
       <div class="text-box">
         <div class="user-info">
-          <img
-            class="user-pic"
-            src="./../../assets/images/Photo_user1.png"
-            alt=""
-          />
+          <!-- todo 沒有圖片的user用空圖 -->
+          <img class="user-pic" :src="getCurrentUser.avatar" alt="" />
         </div>
         <div class="text-area">
           <textarea
@@ -36,6 +33,9 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+import { GET_CURRENT_USER } from "../../store/store-types";
+
 export default {
   props: {
     initialShowModal: {
@@ -68,6 +68,9 @@ export default {
 
       return limit - char + " / " + limit + "剩餘字數";
     },
+    ...mapGetters({
+      getCurrentUser: GET_CURRENT_USER,
+    }),
   },
 };
 </script>

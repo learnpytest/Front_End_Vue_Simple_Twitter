@@ -1,23 +1,27 @@
 ﻿<template>
   <div class="profile-wrapper">
-    <img src="https://picsum.photos/200/300" alt="" class="background-pic" />
+    <!-- todo 沒有cover空圖 -->
+    <img :src="getCurrentUser.cover" alt="" class="background-pic" />
     <div class="profile-pic">
-      <img src="./../../assets/images/Photo_user1.png" alt="" />
+      <img :src="getCurrentUser.avatar" alt="" />
       <button @click="handleShowModalClick">編輯個人資料</button>
     </div>
     <div class="profile-details">
-      <p class="profile-name">John Doe</p>
-      <p class="profile-id">@heyjohn</p>
+      <p class="profile-name">{{ getCurrentUser.name }}</p>
+      <p class="profile-id">@{{ getCurrentUser.account }}</p>
       <p class="description">
-        Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-        sint.
+        {{ getCurrentUser.introduction }}
       </p>
+      <!-- todo api 沒有跟隨者與跟隨中使用者 -->
       <p class="profile-follow">34個<span>跟隨中</span></p>
       <p class="profile-follow">59位<span>跟隨者</span></p>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+import { GET_CURRENT_USER } from "../../store/store-types";
+
 export default {
   props: {
     initialEditModal: {
@@ -42,6 +46,11 @@ export default {
       this.showEditModal = false;
       this.$emit("show-edit-modal");
     },
+  },
+  computed: {
+    ...mapGetters({
+      getCurrentUser: GET_CURRENT_USER,
+    }),
   },
 };
 </script>
