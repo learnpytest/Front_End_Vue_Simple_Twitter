@@ -66,7 +66,6 @@ export default {
           };
           break;
       }
-      console.log("check tabs");
       this.setTweetsFilterType(this.filterType);
 
       // loop over all the tabs

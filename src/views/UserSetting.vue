@@ -4,7 +4,7 @@
       <div class="sidebar"><Sidebar /></div>
       <div class="main">
         <div class="tweets">
-          <AccountForm class="form">
+          <AccountForm class="form" :isSettingExistingAccount="true">
             <template v-slot:title>
               <span class="form__txt">帳號設定</span>
             </template>

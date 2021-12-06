@@ -17,6 +17,7 @@
         v-model="account"
         @input="updateAccountInfo"
       />
+
       <div>
         <!-- todo error message -->
       </div>
@@ -85,11 +86,17 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { SET_ACCOUNT_INFO } from "../store/store-types";
+import { mapActions, mapGetters } from "vuex";
+import { SET_ACCOUNT_INFO, GET_CURRENT_USER } from "../store/store-types";
 
 export default {
   name: "AccountForm",
+  props: {
+    isSettingExistingAccount: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       account: "",
@@ -98,6 +105,15 @@ export default {
       password: "",
       checkPassword: "",
     };
+  },
+  created() {
+    this.account = this.isSettingExistingAccount
+      ? this.getCurrentUser.account
+      : "";
+    this.username = this.isSettingExistingAccount
+      ? this.getCurrentUser.name
+      : "";
+    this.email = this.isSettingExistingAccount ? this.getCurrentUser.email : "";
   },
   methods: {
     updateAccountInfo() {
@@ -111,6 +127,11 @@ export default {
     },
     ...mapActions({
       setAccountInfo: SET_ACCOUNT_INFO,
+    }),
+  },
+  computed: {
+    ...mapGetters({
+      getCurrentUser: GET_CURRENT_USER,
     }),
   },
 };

@@ -1,8 +1,6 @@
 import axios from "axios";
-// import Swal from "sweetalert2"
 // import store from "../../store"
 
-// const baseURL = 'https://forum-express-api.herokuapp.com/api'
 const baseURL = "https://twitter-llrs-api.herokuapp.com/api";
 
 const axiosInstance = axios.create({
@@ -32,11 +30,3 @@ axiosInstance.interceptors.request.use(
 // }, err => Promise.reject(err))
 
 export const apiHelper = axiosInstance;
-
-// todo notification
-// export const Toast = Swal.mixin({
-//   toast: true,
-//   position: "center",
-//   showConfirmButton: false,
-//   timer: 3000
-// })

@@ -21,17 +21,4 @@ export default {
       password,
     });
   },
-  // signUp({
-  //   name,
-  //   email,
-  //   password,
-  //   passwordCheck
-  // }) {
-  //   return apiHelper.post('/signup', {
-  //     name,
-  //     email,
-  //     password,
-  //     passwordCheck
-  //   })
-  // }
 };

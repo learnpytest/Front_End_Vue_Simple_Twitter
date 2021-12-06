@@ -109,7 +109,6 @@ export default {
       return this.$store.getters[`${this.filterType.getter}`];
     },
     ...mapGetters({
-      // tweets: GET_ALL_TWEETS,
       filterType: GET_TWEETS_FILTER_TYPE,
     }),
   },
