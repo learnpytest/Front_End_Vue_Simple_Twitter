@@ -130,6 +130,12 @@ const mutations = {
     state.oneUserLikes = [...oneUserLikes];
     state.filteredTweets = [...oneUserLikes];
   },
+  [SET_ONE_USER_REPLIES]: (state, oneUserReplies) => {
+    state.oneUserReplies = [...oneUserReplies];
+  },
+  [SET_ONE_USER_LIKES]: (state, onUserLikes) => {
+    state.onUserLikes = [...onUserLikes];
+  },
 };
 
 export default {
