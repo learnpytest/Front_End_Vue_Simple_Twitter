@@ -37,9 +37,6 @@ import Sidebar from "../modules/user/Sidebar.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 
-import { mapGetters, mapActions } from "vuex";
-import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../store/store-types";
-
 const dummyData = {
   users: [
     {
@@ -142,18 +139,7 @@ export default {
         this.showReplyModal = false;
       }
     },
-    ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
   },
-  computed: {
-    ...mapGetters({
-      tweets: GET_ALL_TWEETS,
-    }),
-  },
-  // computed: {
-  //   ...mapGetters({
-  //     tweets: GET_ALL_TWEETS,
-  //   }),
-  // },
 };
 </script>
 

@@ -10,6 +10,7 @@ import {
   SET_ACCOUNT_INFO,
   POST_ACCOUNT,
   PUT_ACCOUNT,
+  ADD_NOTIFICATION,
 } from "../store-types";
 
 const state = {
@@ -28,12 +29,11 @@ const actions = {
   [SET_ACCOUNT_INFO]: async ({
     commit
   }, accountInfo) => {
-    console.log(accountInfo);
-
     commit(SET_ACCOUNT_INFO, accountInfo);
   },
   [POST_ACCOUNT]: async ({
-    state
+    state,
+    dispatch
   }) => {
     // todo 必填欄位與密碼確認的提示
     const {
@@ -43,11 +43,28 @@ const actions = {
       password,
       checkPassword,
     } = state.accountInfo;
-    if (!account || !name || !email || password !== checkPassword) {
-      throw new Error("欄位填寫不正確");
+    if (name.length > 50) {
+      dispatch(ADD_NOTIFICATION, {
+        type: "error",
+        message: "字數超出上限！",
+      });
+      return;
+    }
+    if (!account || !name || !email || !password) {
+      dispatch(ADD_NOTIFICATION, {
+        type: "error",
+        message: "內容不可空白",
+      });
+      return;
+    }
+    if (password !== checkPassword) {
+      dispatch(ADD_NOTIFICATION, {
+        type: "error",
+        message: "密碼不相符",
+      });
+      return;
     }
     //  request api
-    console.log("postAccountUser");
     const res = await userAccountAPI.signUp({
       account,
       name,
@@ -57,6 +74,20 @@ const actions = {
     });
 
     if (res.data.status !== "success") {
+      if (res.data.message === "Email has already existed!") {
+        dispatch(ADD_NOTIFICATION, {
+          type: "error",
+          message: "「email 已重覆註冊！」",
+        });
+        return;
+      }
+      if (res.data.message === "Account has already existed!") {
+        dispatch(ADD_NOTIFICATION, {
+          type: "error",
+          message: "「account 已重覆註冊！」",
+        });
+        return;
+      }
       throw new Error(res.data.message);
     }
     // todo 提示註冊成功再導向登入頁

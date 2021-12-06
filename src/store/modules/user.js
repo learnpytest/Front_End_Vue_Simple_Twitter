@@ -1,4 +1,3 @@
-// import axios from "axios";
 // import currentUserAPI from "../../apis/currentUserAPI";
 
 import {
@@ -9,6 +8,7 @@ import {
   GET_CURRENT_USER,
   SET_CURRENT_USER,
   REVOKE_AUTHENTICATION,
+  ADD_NOTIFICATION,
 } from "../store-types";
 
 const state = {
@@ -20,10 +20,15 @@ const getters = {
 };
 const actions = {
   [REVOKE_AUTHENTICATION]: async ({
-    commit
+    commit,
+    dispatch
   }) => {
     console.log("REVOKE_AUTHENTICATION");
     commit(REVOKE_AUTHENTICATION);
+    dispatch(ADD_NOTIFICATION, {
+      type: "success",
+      message: "成功登出",
+    });
   },
   [SET_CURRENT_USER]: async ({
     commit
@@ -56,7 +61,6 @@ const mutations = {
     console.log("REVOKE_AUTHENTICATION");
     state.currentUser = {};
     state.isAuthenticated = false;
-    // todo 移除locastorage token
     localStorage.removeItem("token");
     //測試是否還能取得資料，在此階段，期待結果將是，能進入其他頁面但不能取得資料，此步驟保護api。下一步驟為若使用者沒有登入，直接再網址輸入api，將使用者導回登入頁而不是顯示其他頁面。如果使用者已經login，若使用者還想進入登入頁，將使用者直接導向抵達頁。
     console.log(state.currentUser);
