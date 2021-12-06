@@ -116,6 +116,37 @@
     </div>
   </div>
 </template>
+
+<script>
+import { mapGetters } from "vuex";
+import { GET_TWEETS_FILTER_TYPE } from "../../store/store-types";
+
+export default {
+  name: "Comments",
+  created() {
+    this.getTweets();
+  },
+  methods: {
+    getTweets() {
+      console.log("comments dispatch get tweets");
+      this.$store.dispatch(`${this.filterType.setter}`);
+    },
+  },
+  computed: {
+    tweets() {
+      return this.$store.getters[`${this.filterType.getter}`];
+    },
+
+    ...mapGetters({
+      filterType: GET_TWEETS_FILTER_TYPE,
+    }),
+  },
+  watch: {
+    filterType: "getTweets",
+  },
+};
+</script>
+
 <style lang="scss" scoped>
 @import "./../../assets/scss/main.scss";
 @import "./../../assets/scss/tweet.scss";
