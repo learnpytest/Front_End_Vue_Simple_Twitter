@@ -14,6 +14,9 @@ export default {
   getOneUserTweet(userId) {
     return apiHelper.get(`/users/${userId}/tweets`);
   },
+  getOneUserReplies(userId) {
+    return apiHelper.get(`/users/${userId}/replied_tweets`);
+  },
   // 如果沒有使用helper設定token，會是
   // getCurrentUser() {
   //   return apiHelper.get("/get_current_user", {

@@ -62,8 +62,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
-// import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../../store/store-types";
+import { mapGetters } from "vuex";
 
 import { GET_TWEETS_FILTER_TYPE } from "../../store/store-types";
 
@@ -100,9 +99,8 @@ export default {
       this.showReplyModal = true;
       this.$emit("show-reply-modal");
     },
-    // ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
-    ...mapActions({ setFilterType: GET_TWEETS_FILTER_TYPE }),
     getTweets() {
+      console.log("dispatch tweets vue");
       this.$store.dispatch(`${this.filterType.setter}`);
     },
   },
@@ -114,6 +112,9 @@ export default {
       // tweets: GET_ALL_TWEETS,
       filterType: GET_TWEETS_FILTER_TYPE,
     }),
+  },
+  watch: {
+    filterType: "getTweets",
   },
 };
 </script>

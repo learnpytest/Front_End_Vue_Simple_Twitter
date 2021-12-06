@@ -15,11 +15,24 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
+import {
+  SET_TWEETS_FILTER_TYPE,
+  GET_ONE_USER_TWEETS,
+  SET_ONE_USER_TWEETS,
+  GET_ONE_USER_REPLIES,
+  SET_ONE_USER_REPLIES,
+  GET_ONE_USER_LIKES,
+  SET_ONE_USER_LIKES,
+} from "../../store/store-types";
+
 export default {
   data() {
     return {
       selectedIndex: 0, // the index of the selected tab,
       tabs: [], // all of the tabs
+      filterType: {},
     };
   },
   created() {
@@ -31,12 +44,37 @@ export default {
   methods: {
     selectTab(i) {
       this.selectedIndex = i;
+      // select tabs will set the filter type to decide what tweets to render
+
+      switch (i) {
+        case 0:
+          this.filterType = {
+            getter: GET_ONE_USER_TWEETS,
+            setter: SET_ONE_USER_TWEETS,
+          };
+          break;
+        case 1:
+          this.filterType = {
+            getter: GET_ONE_USER_REPLIES,
+            setter: SET_ONE_USER_REPLIES,
+          };
+          break;
+        case 2:
+          this.filterType = {
+            getter: GET_ONE_USER_LIKES,
+            setter: SET_ONE_USER_LIKES,
+          };
+          break;
+      }
+      console.log("check tabs");
+      this.setTweetsFilterType(this.filterType);
 
       // loop over all the tabs
       this.tabs.forEach((tab, index) => {
         tab.isActive = index === i;
       });
     },
+    ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
   },
 };
 </script>

@@ -48,14 +48,13 @@ import Tab from "../modules/user/Tab.vue";
 import Comments from "../modules/user/Comments.vue";
 import UserEditModal from "../modules/user/UserEditModal.vue";
 
-import { mapActions } from "vuex";
+// import { mapActions } from "vuex";
 
-import {
-  SET_TWEETS_FILTER_TYPE,
-  GET_ONE_USER_TWEETS,
-  SET_ONE_USER_TWEETS,
-} from "../store/store-types";
-// currentUser.id
+// import {
+//   SET_TWEETS_FILTER_TYPE,
+//   GET_ONE_USER_TWEETS,
+//   SET_ONE_USER_TWEETS,
+// } from "../store/store-types";
 export default {
   components: {
     Popular,
@@ -87,15 +86,15 @@ export default {
       showReplyModal: false,
     };
   },
-  created() {
-    this.setTweetsFilterType({
-      getter: GET_ONE_USER_TWEETS,
-      setter: SET_ONE_USER_TWEETS,
-    });
-  },
-  methods: {
-    ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
-  },
+  // created() {
+  //   this.setTweetsFilterType({
+  //     getter: GET_ONE_USER_TWEETS,
+  //     setter: SET_ONE_USER_TWEETS,
+  //   });
+  // },
+  // methods: {
+  //   ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
+  // },
 };
 </script>
 
