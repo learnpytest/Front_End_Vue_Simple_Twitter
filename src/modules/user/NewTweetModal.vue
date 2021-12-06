@@ -12,8 +12,12 @@
       </div>
       <div class="text-box">
         <div class="user-info">
-          <!-- todo 沒有圖片的user用空圖 -->
-          <img class="user-pic" :src="getCurrentUser.avatar" alt="" />
+          <!-- 沒有上傳照片產生空圖 -->
+          <img
+            class="user-pic"
+            :src="getCurrentUser.avatar | emptyImage"
+            alt=""
+          />
         </div>
         <div class="text-area">
           <textarea
@@ -35,8 +39,10 @@
 <script>
 import { mapGetters } from "vuex";
 import { GET_CURRENT_USER } from "../../store/store-types";
+import { mixinEmptyImage } from "../../utils/mixin";
 
 export default {
+  mixins: [mixinEmptyImage],
   props: {
     initialShowModal: {
       type: Boolean,

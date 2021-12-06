@@ -1,9 +1,14 @@
 ﻿<template>
   <div class="profile-wrapper">
-    <!-- todo 沒有cover空圖 -->
-    <img :src="getCurrentUser.cover" alt="" class="background-pic" />
+    <!-- 沒cover產生空圖 -->
+    <img
+      :src="getCurrentUser.cover | emptyImage"
+      alt=""
+      class="background-pic"
+    />
     <div class="profile-pic">
-      <img :src="getCurrentUser.avatar" alt="" />
+      <!-- 沒有上傳照片產生空圖 -->
+      <img :src="getCurrentUser.avatar | emptyImage" alt="" />
       <button @click="handleShowModalClick">編輯個人資料</button>
     </div>
     <div class="profile-details">
@@ -21,8 +26,10 @@
 <script>
 import { mapGetters } from "vuex";
 import { GET_CURRENT_USER } from "../../store/store-types";
+import { mixinEmptyImage } from "../../utils/mixin";
 
 export default {
+  mixins: [mixinEmptyImage],
   props: {
     initialEditModal: {
       type: Boolean,

@@ -2,8 +2,8 @@
   <div class="comment-wrapper">
     <div class="comment" v-for="tweet in tweets" :key="tweet.id">
       <div class="user-pic">
-        <!-- todo 沒有avatar空圖處理 -->
-        <img :src="tweet.User.avatar" alt="" />
+        <!-- 沒有上傳照片產生空圖 -->
+        <img :src="tweet.User.avatar | emptyImage" alt="" />
       </div>
 
       <div class="tweet-info">
@@ -123,12 +123,12 @@
 <script>
 import { mapGetters } from "vuex";
 import { GET_FILLTERED_TWEETS } from "../../store/store-types";
+import { mixinEmptyImage } from "../../utils/mixin";
 
 export default {
   name: "Comments",
-  created() {
-    // this.getTweets();
-  },
+  mixins: [mixinEmptyImage],
+
   methods: {
     getTweets() {
       console.log("comments dispatch get tweets");
@@ -136,18 +136,10 @@ export default {
     },
   },
   computed: {
-    // tweets() {
-    //   return this.$store.getters[`${this.filterType.getter}`];
-    // },
-
     ...mapGetters({
-      // filterType: GET_TWEETS_FILTER_TYPE,
       tweets: GET_FILLTERED_TWEETS,
     }),
   },
-  // watch: {
-  //   filterType: "getTweets",
-  // },
 };
 </script>
 

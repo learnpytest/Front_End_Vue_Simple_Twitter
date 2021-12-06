@@ -2,8 +2,8 @@
   <div class="popular-wrapper">
     <div class="popular-header">Popular</div>
     <div class="popular-card" v-for="user in getTopUsers" :key="user.id">
-      <!-- todo user avatar可以產生空圖 -->
-      <img :src="user.avatar" alt="user avatar" />
+      <!-- 沒有上傳照片產生空圖 -->
+      <img :src="user.avatar | emptyImage" alt="user avatar" />
       <div class="popular-card_info">
         <p class="user-name">{{ user.name }}</p>
         <p class="user-info">@{{ user.account }}</p>
@@ -29,10 +29,12 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { mixinEmptyImage } from "../../utils/mixin";
 
 import { GET_TOP_USERS, SET_TOP_USERS } from "../../store/store-types";
 export default {
   name: "Popular",
+  mixins: [mixinEmptyImage],
   created() {
     this.setTopUsers();
   },
