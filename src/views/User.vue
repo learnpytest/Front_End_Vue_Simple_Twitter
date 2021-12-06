@@ -27,7 +27,9 @@
           />
         </div>
         <tabs class="tabs">
-          <tab title="推文"><Tweets /></tab>
+          <tab title="推文"
+            ><Tweets :initialShowReplyModal="showReplyModal"
+          /></tab>
           <tab class="comments" title="推文與回覆"><Comments /></tab>
           <tab title="喜歡的內容"><Tweets /></tab>
         </tabs>
@@ -46,6 +48,14 @@ import Tab from "../modules/user/Tab.vue";
 import Comments from "../modules/user/Comments.vue";
 import UserEditModal from "../modules/user/UserEditModal.vue";
 
+import { mapActions } from "vuex";
+
+import {
+  SET_TWEETS_FILTER_TYPE,
+  GET_ONE_USER_TWEETS,
+  SET_ONE_USER_TWEETS,
+} from "../store/store-types";
+// currentUser.id
 export default {
   components: {
     Popular,
@@ -70,6 +80,21 @@ export default {
         this.showEditModal = false;
       }
     },
+  },
+  data() {
+    // test
+    return {
+      showReplyModal: false,
+    };
+  },
+  created() {
+    this.setTweetsFilterType({
+      getter: GET_ONE_USER_TWEETS,
+      setter: SET_ONE_USER_TWEETS,
+    });
+  },
+  methods: {
+    ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
   },
 };
 </script>

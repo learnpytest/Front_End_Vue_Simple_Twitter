@@ -1,4 +1,5 @@
 ﻿<template>
+  <!-- todo need to correct all detail for tweets after server provide fulfill tweet data -->
   <div class="tweets-wrapper">
     <div
       class="tweet"
@@ -7,13 +8,13 @@
       @click.stop.prevent="() => $router.push('reply')"
     >
       <div class="user-pic">
-        <img :src="tweet.User.avatar" alt="" />
+        <img src="#" alt="" />
       </div>
 
       <div class="tweet-info">
         <div class="info">
           <p class="user-name">
-            {{ tweet.User.name }}
+            <!-- {{ tweet.User.name }} -->
             <span class="user-id">@{{ tweet.UserId }} • </span
             ><span class="time">{{ tweet.createdAt }}小時</span>
           </p>
@@ -30,6 +31,13 @@
             <p class="reply-num">{{ tweet.id }}</p>
           </div>
           <div class="tweet-buttons">
+            <!-- <img
+              id="liked-btn"
+              src="./../../assets/images/icon_like_fill.svg"
+              alt=""
+              @click.stop.prevent="handleLikeButton(tweet.isLiked === 'true')"
+              v-if="tweet.isLiked"
+            /> -->
             <img
               id="liked-btn"
               src="./../../assets/images/icon_like_fill.svg"
@@ -45,7 +53,7 @@
             />
 
             <p class="liked-num" :class="{ liked: tweet.isLiked }">
-              {{ tweet.LikedUsers.length }}
+              <!-- {{ tweet.LikedUsers.length }} -->
             </p>
           </div>
         </div>
@@ -55,13 +63,16 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
-import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../../store/store-types";
+// import { GET_ALL_TWEETS, SET_ALL_TWEETS } from "../../store/store-types";
+
+import { GET_TWEETS_FILTER_TYPE } from "../../store/store-types";
 
 export default {
   props: {
     initialShowReplyModal: {
       type: Boolean,
-      required: true,
+      //test need to set required on true
+      // required: true,
     },
   },
   data() {
@@ -71,7 +82,7 @@ export default {
   },
 
   created() {
-    this.setAllTweets();
+    this.getTweets();
   },
   methods: {
     fetchData() {
@@ -89,11 +100,19 @@ export default {
       this.showReplyModal = true;
       this.$emit("show-reply-modal");
     },
-    ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
+    // ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
+    ...mapActions({ setFilterType: GET_TWEETS_FILTER_TYPE }),
+    getTweets() {
+      this.$store.dispatch(`${this.filterType.setter}`);
+    },
   },
   computed: {
+    tweets() {
+      return this.$store.getters[`${this.filterType.getter}`];
+    },
     ...mapGetters({
-      tweets: GET_ALL_TWEETS,
+      // tweets: GET_ALL_TWEETS,
+      filterType: GET_TWEETS_FILTER_TYPE,
     }),
   },
 };

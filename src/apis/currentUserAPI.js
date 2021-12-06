@@ -1,4 +1,3 @@
-// this will be merged into usersAPI
 import {
   apiHelper
 } from "../apis/apiHelper";
@@ -21,19 +20,5 @@ export default {
   //   return apiHelper.get(`/users/${userId}`, {headers:{
   //     Authorization:`Bearer ${getToken()}`
   //   }})
-  // }
-
-  // signUp({
-  //   name,
-  //   email,
-  //   password,
-  //   passwordCheck
-  // }) {
-  //   return apiHelper.post('/signup', {
-  //     name,
-  //     email,
-  //     password,
-  //     passwordCheck
-  //   })
   // }
 };

@@ -20,7 +20,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="#1">
+        <router-link :to="{ name: 'user' }">
           <div class="nav-link">
             <img src="./../../assets/images/icon_user.svg" alt="" />
             <p class="nav-link_text">個人資料</p>
