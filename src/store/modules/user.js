@@ -76,10 +76,6 @@ const mutations = {
     state.isAuthenticated = false;
     localStorage.removeItem("token");
     //測試是否還能取得資料，在此階段，期待結果將是，能進入其他頁面但不能取得資料，此步驟保護api。下一步驟為若使用者沒有登入，直接再網址輸入api，將使用者導回登入頁而不是顯示其他頁面。如果使用者已經login，若使用者還想進入登入頁，將使用者直接導向抵達頁。
-    console.log(state.currentUser);
-    setTimeout(() => {
-      alert("SUCCESSFULLY LOGOUT");
-    }, 500);
     vm.$router.push("/admin/login");
   },
   // 將使用SET_CURRENT_USER來驗證每一次轉址使用者是否仍有權限。需要設定router的beforeEach來監聽每一個轉址token有無變化

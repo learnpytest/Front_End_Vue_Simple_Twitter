@@ -90,7 +90,7 @@ const actions = {
           return;
         }
       }
-      // todo 導向登入頁提示註冊成功
+      // 導向登入頁提示註冊成功
       vm.$router.push("/login");
       dispatch(ADD_NOTIFICATION, {
         type: "success",
@@ -102,7 +102,8 @@ const actions = {
   },
   [PUT_ACCOUNT]: async ({
     rootState,
-    state
+    state,
+    dispatch
   }) => {
     // todo 必填欄位與密碼確認的提示
     const {
@@ -131,8 +132,12 @@ const actions = {
     if (data.status !== "success" || statusText !== "OK") {
       throw new Error(data.message);
     }
-    // todo 提示註冊成功再拉取當前使用者資料
-    alert(data.message);
+    // 提示修改資料成功再拉取當前使用者資料
+
+    dispatch(ADD_NOTIFICATION, {
+      type: "success",
+      message: "已編輯個人資料",
+    });
   },
 };
 const mutations = {

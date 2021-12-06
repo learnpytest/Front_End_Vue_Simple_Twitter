@@ -70,6 +70,7 @@ export default {
   data() {
     return {
       showEditModal: false,
+      showReplyModal: false,
     };
   },
   methods: {
@@ -81,12 +82,7 @@ export default {
       }
     },
   },
-  data() {
-    // test
-    return {
-      showReplyModal: false,
-    };
-  },
+
   computed: {
     ...mapGetters({
       getCurrentUser: GET_CURRENT_USER,
