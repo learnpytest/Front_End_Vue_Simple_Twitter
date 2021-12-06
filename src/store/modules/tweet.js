@@ -24,6 +24,7 @@ const state = {
   allTweets: [],
   oneUserTweets: [],
   oneUserReplies: [],
+
   oneUserLikes: [],
   filteredTweets: [],
 };
