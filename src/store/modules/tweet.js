@@ -24,7 +24,6 @@ const state = {
   allTweets: [],
   oneUserTweets: [],
   oneUserReplies: [],
-
   oneUserLikes: [],
   filteredTweets: [],
 };
@@ -133,9 +132,11 @@ const mutations = {
   },
   [SET_ONE_USER_REPLIES]: (state, oneUserReplies) => {
     state.oneUserReplies = [...oneUserReplies];
+    state.filteredTweets = [...oneUserReplies];
   },
   [SET_ONE_USER_LIKES]: (state, oneUserLikes) => {
-    state.onUserLikes = [...oneUserLikes];
+    state.oneUserLikes = [...oneUserLikes];
+    state.filteredTweets = [...oneUserLikes];
   },
 };
 
