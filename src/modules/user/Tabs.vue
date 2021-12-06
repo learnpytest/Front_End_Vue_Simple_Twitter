@@ -19,12 +19,13 @@ import { mapActions } from "vuex";
 
 import {
   SET_TWEETS_FILTER_TYPE,
-  GET_ONE_USER_TWEETS,
+  GET_CURRENT_USER,
+  // GET_ONE_USER_TWEETS,
+  // GET_ONE_USER_REPLIES,
+  // GET_ONE_USER_LIKES,
   SET_ONE_USER_TWEETS,
-  GET_ONE_USER_REPLIES,
   SET_ONE_USER_REPLIES,
-  GET_ONE_USER_LIKES,
-  SET_ONE_USER_LIKES,
+  // SET_ONE_USER_LIKES,
 } from "../../store/store-types";
 
 export default {
@@ -48,24 +49,37 @@ export default {
 
       switch (i) {
         case 0:
-          this.filterType = {
-            getter: GET_ONE_USER_TWEETS,
-            setter: SET_ONE_USER_TWEETS,
-          };
+          this.$store.dispatch(SET_ONE_USER_TWEETS, this.userId);
           break;
         case 1:
-          this.filterType = {
-            getter: GET_ONE_USER_REPLIES,
-            setter: SET_ONE_USER_REPLIES,
-          };
+          this.$store.dispatch(SET_ONE_USER_REPLIES, this.userId);
+
           break;
-        case 2:
-          this.filterType = {
-            getter: GET_ONE_USER_LIKES,
-            setter: SET_ONE_USER_LIKES,
-          };
-          break;
+        // case 2:
+        //   this.$store.dispatch(SET_ONE_USER_LIKES, this.userId);
+        //   break;
       }
+
+      // switch (i) {
+      //   case 0:
+      //     this.filterType = {
+      //       getter: GET_ONE_USER_TWEETS,
+      //       setter: SET_ONE_USER_TWEETS,
+      //     };
+      //     break;
+      //   case 1:
+      //     this.filterType = {
+      //       getter: GET_ONE_USER_REPLIES,
+      //       setter: SET_ONE_USER_REPLIES,
+      //     };
+      //     break;
+      //   case 2:
+      //     this.filterType = {
+      //       getter: GET_ONE_USER_LIKES,
+      //       setter: SET_ONE_USER_LIKES,
+      //     };
+      //     break;
+      // }
       this.setTweetsFilterType(this.filterType);
 
       // loop over all the tabs
@@ -74,6 +88,11 @@ export default {
       });
     },
     ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
+  },
+  computed: {
+    userId() {
+      return this.$store.getters[GET_CURRENT_USER].id;
+    },
   },
 };
 </script>
