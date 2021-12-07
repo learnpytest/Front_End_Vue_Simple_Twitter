@@ -16,9 +16,9 @@ import {
 
 const state = {
   allTweets: [],
-  oneUserTweets: [],
-  oneUserReplies: [],
-  oneUserLikes: [],
+  // oneUserTweets: [],
+  // oneUserReplies: [],
+  // oneUserLikes: [],
   filteredTweets: [],
 };
 const getters = {
@@ -108,6 +108,7 @@ const mutations = {
     state.filteredTweets = [...oneUserTweets];
   },
   [SET_ONE_USER_REPLIES]: (state, oneUserReplies) => {
+    // console.log()
     // state.oneUserReplies = [...oneUserReplies];
     state.filteredTweets = [...oneUserReplies];
   },

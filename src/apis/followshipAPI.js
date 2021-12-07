@@ -17,7 +17,13 @@ export default {
   },
 
   // 追蹤使用者 input userId
-  postFollowships() {
-    return apiHelper.post(`/followships`);
+  postFollowships(followingId) {
+    return apiHelper.post(`/followships`, {
+      headers: {
+        data: {
+          followingId: `${followingId}`,
+        },
+      },
+    });
   },
 };

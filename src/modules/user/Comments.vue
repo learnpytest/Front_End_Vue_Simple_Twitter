@@ -1,21 +1,20 @@
 ﻿<template>
   <div class="comment-wrapper">
-    <div class="comment" v-for="tweet in tweets" :key="tweet.id">
+    <div class="comment" v-for="tweet in tweets" :key="tweet.ReplyID">
       <div class="user-pic">
-        <!-- 沒有上傳照片產生空圖 -->
-        <img :src="tweet.User.avatar | emptyImage" alt="" />
+        <img :src="tweet.Tweet.User.avatar | emptyImage" alt="" />
       </div>
 
       <div class="tweet-info">
         <div class="info">
           <p class="user-name">
-            {{ tweet.User.name }}
-            <span class="user-id">@{{ tweet.User.account }} • </span
+            {{ tweet.Tweet.User.name }}
+            <span class="user-id">@{{ tweet.Tweet.User.account }} • </span
             ><span class="time">{{ tweet.createdAt | fromNow }}</span>
           </p>
         </div>
         <p Class="reply-to">
-          回覆 <span>@ {{ tweet.Tweet.User.account }}</span>
+          回覆 <span>@ {{ tweet.User.account }}</span>
         </p>
         <div class="tweet-text">
           {{ tweet.comment }}

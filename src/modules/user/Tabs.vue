@@ -15,17 +15,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
 import {
-  SET_TWEETS_FILTER_TYPE,
   GET_CURRENT_USER,
   // GET_ONE_USER_TWEETS,
   // GET_ONE_USER_REPLIES,
   // GET_ONE_USER_LIKES,
   SET_ONE_USER_TWEETS,
   SET_ONE_USER_REPLIES,
-
   // SET_ONE_USER_LIKES,
 } from "../../store/store-types";
 
@@ -34,7 +30,6 @@ export default {
     return {
       selectedIndex: 0, // the index of the selected tab,
       tabs: [], // all of the tabs
-      filterType: {},
     };
   },
   created() {
@@ -61,14 +56,11 @@ export default {
         //   break;
       }
 
-      this.setTweetsFilterType(this.filterType);
-
       // loop over all the tabs
       this.tabs.forEach((tab, index) => {
         tab.isActive = index === i;
       });
     },
-    ...mapActions({ setTweetsFilterType: SET_TWEETS_FILTER_TYPE }),
   },
   computed: {
     userId() {

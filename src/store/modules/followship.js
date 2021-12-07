@@ -66,9 +66,12 @@ const actions = {
   },
   [POST_FOLLOWSHIP]: async ({
     dispatch
-  }, targetedUserId) => {
+  }, followingId) => {
     // send api
-    console.log("POST_FOLLOWSHIP", targetedUserId);
+    // console.log("POST_FOLLOWSHIP", followingId);
+
+    const res = await followshipAPI.postFollowships(followingId);
+    console.log("POST_FOLLOWSHIP", res);
     // dispatch(GET_CURRENT_USER_FOLLOWINGS, currentUserId);
     dispatch(GET_CURRENT_USER_FOLLOWINGS);
   },
