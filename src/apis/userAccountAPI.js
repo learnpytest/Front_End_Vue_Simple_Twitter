@@ -26,7 +26,7 @@ export default {
     password,
     checkPassword
   }) {
-    return apiHelper.put(`/users/${id}`, {
+    return apiHelper.put(`/users/${id}/setting`, {
       account,
       name,
       email,

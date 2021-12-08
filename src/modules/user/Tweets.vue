@@ -4,21 +4,21 @@
     <div
       class="tweet"
       v-for="tweet in tweets"
-      :key="tweet.id"
+      :key="tweet.TweetId"
       @click.stop.prevent="
-        () => $router.push({ name: 'reply-list', params: { id: tweet.id } })
+        () =>
+          $router.push({ name: 'reply-list', params: { id: tweet.TweetId } })
       "
     >
       <div class="user-pic">
         <img :src="tweet.User.avatar | emptyImage" alt="" />
       </div>
-      {{ tweet }}
 
       <div class="tweet-info">
         <div class="info">
           <p class="user-name">
-            {{ tweet.name }}
-            <span class="user-id">@{{ tweet.UserId }} • </span
+            {{ tweet.User.name }}
+            <span class="user-id">@{{ tweet.User.account }} • </span
             ><span class="time">{{ tweet.createdAt | fromNow }}</span>
           </p>
         </div>
@@ -31,7 +31,7 @@
               @click.stop.prevent="handleShowModalClick"
             />
 
-            <p class="reply-num">{{ tweet.replyCount }}</p>
+            <p class="reply-num">{{ tweet.RepliesCount }}</p>
           </div>
           <div class="tweet-buttons">
             <!-- <img
@@ -56,7 +56,7 @@
             />
 
             <p class="liked-num" :class="{ liked: tweet.isLiked }">
-              {{ tweet.likeCount }}
+              {{ tweet.LikesCount }}
             </p>
           </div>
         </div>
