@@ -143,7 +143,7 @@ router.beforeEach(async (to, from, next) => {
   if (tokenInLocalStorage && tokenInLocalStorage !== tokenInStore) {
     isAuthenticated = await store.dispatch(RESET_CURRENT_USER_PROFILE);
   }
-  const pathsWithoutAuthentication = ["user-login", "register"];
+  const pathsWithoutAuthentication = ["user-login", "register", "admin-login"];
   const adminPathsWithoutAuthentication = ["admin-login"];
 
   if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {

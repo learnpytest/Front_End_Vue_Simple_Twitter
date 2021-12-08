@@ -10,7 +10,9 @@
             @click="$router.back()"
           />
           <div class="header-info">
-            <p>John Doe</p>
+            <!-- <p>John Doe</p> -->
+            <p>{{ getCurrentUser.name }}</p>
+
             <p>25 <span>推文</span></p>
             <!-- <p>{{ getCurrentUser.name }}</p>
             <p>25 <span>推文</span></p> -->

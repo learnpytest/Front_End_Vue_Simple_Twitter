@@ -1,6 +1,35 @@
 import Moment from "moment";
 
 Moment.locale("zh-tw", {
+  monthsShort: "1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月".split("_"),
+  weekdaysMin: "日_一_二_三_四_五_六".split("_"),
+  longDateFormat: {
+    LT: "Ah點mm分",
+    LTS: "Ah點m分s秒",
+    L: "YYYY-MM-DD",
+    LL: "YYYY年MMMD日",
+    LLL: "YYYY年MMMD日Ah點mm分",
+    LLLL: "YYYY年MMMD日ddddAh點mm分",
+    l: "YYYY-MM-DD",
+    ll: "YYYY年MMMD日",
+    lll: "YYYY年MMMD日Ah點mm分",
+    llll: "YYYY年MMMD日ddddAh點mm分",
+  },
+  ordinal: function (number, period) {
+    switch (period) {
+      case "d":
+      case "D":
+      case "DDD":
+        return number + "日";
+      case "M":
+        return number + "月";
+      case "w":
+      case "W":
+        return number + "周";
+      default:
+        return number;
+    }
+  },
   relativeTime: {
     future: "%s内",
     // past: "%s前",
@@ -30,7 +59,13 @@ export const mixinFromNowFilters = {
       if (nowTime - pastTime < 86400000) {
         return Moment(datetime).fromNow();
       } else {
-        return Moment().format(datetime);
+        // return Moment().format(datetime);
+
+        return Moment(datetime.toString().split("T")[0])
+          .locale("zh-tw")
+          .format("LL");
+
+        // return Moment(datetime).locale("zh-tw").format("LLLL");
       }
     },
   },
