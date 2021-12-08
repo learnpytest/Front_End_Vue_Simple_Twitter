@@ -11,6 +11,7 @@ import {
   SET_CURRENT_USER_FOLLOWINGS,
   POST_FOLLOWSHIP,
   DELETE_FOLLOWSHIP,
+  ADD_NOTIFICATION,
 } from "../store-types";
 
 const state = {
@@ -70,10 +71,29 @@ const actions = {
     // send api
     // console.log("POST_FOLLOWSHIP", followingId);
 
-    const res = await followshipAPI.postFollowships(followingId);
-    console.log("POST_FOLLOWSHIP", res);
-    // dispatch(GET_CURRENT_USER_FOLLOWINGS, currentUserId);
-    dispatch(GET_CURRENT_USER_FOLLOWINGS);
+    try {
+      const res = await followshipAPI.postFollowships(followingId);
+      console.log("POST_FOLLOWSHIPID", followingId);
+      const {
+        data,
+        statusText
+      } = res;
+      if (data.status !== "success" || statusText !== "OK") {
+        throw new Error(data.message);
+      }
+      dispatch(ADD_NOTIFICATION, {
+        type: "success",
+        message: "跟隨成功",
+      });
+      // dispatch(GET_CURRENT_USER_FOLLOWINGS, currentUserId);
+      // check
+      dispatch(SET_CURRENT_USER_FOLLOWERS);
+    } catch (err) {
+      dispatch(ADD_NOTIFICATION, {
+        type: "error",
+        message: "載入資料失敗，請稍後再試",
+      });
+    }
   },
   [DELETE_FOLLOWSHIP]: async ({
     dispatch

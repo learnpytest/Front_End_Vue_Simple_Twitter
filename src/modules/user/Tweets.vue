@@ -31,7 +31,9 @@
               @click.stop.prevent="handleShowModalClick"
             />
 
-            <p class="reply-num">{{ tweet.repliesCount }}</p>
+            <p class="reply-num">
+              {{ tweet.repliesCount || tweet.RepliesCount }}
+            </p>
           </div>
           <div class="tweet-buttons">
             <!-- <img
@@ -56,7 +58,7 @@
             />
 
             <p class="liked-num" :class="{ liked: tweet.isLiked }">
-              {{ tweet.likesCount }}
+              {{ tweet.likesCount || tweet.LikesCount }}
             </p>
           </div>
         </div>

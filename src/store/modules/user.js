@@ -17,8 +17,6 @@ const state = {
   currentUser: {},
   isAuthenticated: false,
   topUsers: [],
-  currentUserFollowers: [],
-  currentUserFollowings: [],
 };
 const getters = {
   [GET_CURRENT_USER]: (state) => state.currentUser,
