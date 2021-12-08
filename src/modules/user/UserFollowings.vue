@@ -12,11 +12,8 @@
         <p class="user-info">@{{ following.account }}</p>
         <p>{{ following.introduction }}</p>
       </div>
-      <div class="follow-btn" v-if="following.isFollowed">
-        <button class="following-btn">正在跟隨</button>
-      </div>
-      <div class="follow-btn" v-else>
-        <button class="follower-btn">跟隨</button>
+      <div class="follow-btn">
+        <button class="following-btn" @click="cancelFollow">正在跟隨</button>
       </div>
     </div>
   </div>
