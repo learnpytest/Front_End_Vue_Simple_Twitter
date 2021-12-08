@@ -22,7 +22,7 @@ import {
   // GET_ONE_USER_LIKES,
   SET_ONE_USER_TWEETS,
   SET_ONE_USER_REPLIES,
-  // SET_ONE_USER_LIKES,
+  SET_ONE_USER_LIKES,
 } from "../../store/store-types";
 
 export default {
@@ -51,9 +51,9 @@ export default {
           this.$store.dispatch(SET_ONE_USER_REPLIES, this.userId);
 
           break;
-        // case 2:
-        //   this.$store.dispatch(SET_ONE_USER_LIKES, this.userId);
-        //   break;
+        case 2:
+          this.$store.dispatch(SET_ONE_USER_LIKES, this.userId);
+          break;
       }
 
       // loop over all the tabs

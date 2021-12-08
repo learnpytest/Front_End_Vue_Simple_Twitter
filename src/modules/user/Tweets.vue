@@ -8,18 +8,20 @@
       @click.stop.prevent="() => $router.push('reply')"
     >
       <div class="user-pic">
-        <!-- 沒有上傳照片產生空圖 -->
+        <!-- 當前使用者是第一層的User -->
         <img :src="tweet.User.avatar | emptyImage" alt="" />
       </div>
 
       <div class="tweet-info">
         <div class="info">
           <p class="user-name">
-            <!-- {{ tweet.User.name }} -->
-            <span class="user-id">@{{ tweet.UserId }} • </span
+            <!-- 當前使用者是第一層的User -->
+            {{ tweet.User.name }}
+            <span class="user-id">@{{ tweet.User.account }} • </span
             ><span class="time">{{ tweet.createdAt | fromNow }}</span>
           </p>
         </div>
+        <!-- 當前tweet是第一層直接選取資料 -->
         <div class="tweet-text">{{ tweet.description }}</div>
         <div class="tweet-buttons-control">
           <div class="tweet-buttons">
@@ -29,7 +31,7 @@
               @click.stop.prevent="handleShowModalClick"
             />
 
-            <p class="reply-num">{{ tweet.replyCount }}</p>
+            <p class="reply-num">{{ tweet.repliesCount }}</p>
           </div>
           <div class="tweet-buttons">
             <!-- <img
@@ -54,7 +56,7 @@
             />
 
             <p class="liked-num" :class="{ liked: tweet.isLiked }">
-              {{ tweet.likeCount }}
+              {{ tweet.likesCount }}
             </p>
           </div>
         </div>

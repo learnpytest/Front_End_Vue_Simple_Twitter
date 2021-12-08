@@ -2,19 +2,22 @@
   <div class="comment-wrapper">
     <div class="comment" v-for="tweet in tweets" :key="tweet.ReplyID">
       <div class="user-pic">
-        <img :src="tweet.Tweet.User.avatar | emptyImage" alt="" />
+        <!-- 當前使用者是第一層的User -->
+        <img :src="tweet.User.avatar | emptyImage" alt="" />
       </div>
 
       <div class="tweet-info">
         <div class="info">
+          <!-- 當前使用者是第一層的User -->
           <p class="user-name">
-            {{ tweet.Tweet.User.name }}
-            <span class="user-id">@{{ tweet.Tweet.User.account }} • </span
+            {{ tweet.User.name }}
+            <span class="user-id">@{{ tweet.User.account }} • </span
             ><span class="time">{{ tweet.createdAt | fromNow }}</span>
           </p>
         </div>
         <p Class="reply-to">
-          回覆 <span>@ {{ tweet.User.account }}</span>
+          <!-- 被回覆使用者是第一層的Tweet下User -->
+          回覆 <span>@ {{ tweet.Tweet.User.account }}</span>
         </p>
         <div class="tweet-text">
           {{ tweet.comment }}
