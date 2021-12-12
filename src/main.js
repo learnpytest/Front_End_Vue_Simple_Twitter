@@ -22,15 +22,15 @@ const socketOptions = {
   transports: ["websocket", "polling"],
 };
 
-const socket = io(
-  "http://2dd8-2001-b011-e-59a3-9de1-69a7-7562-a92f.ngrok.io/",
-  socketOptions
-);
-
 // const socket = io(
-//   "https://twitter-llrs-chatroom.herokuapp.com/",
+//   "http://2dd8-2001-b011-e-59a3-9de1-69a7-7562-a92f.ngrok.io/",
 //   socketOptions
 // );
+
+const socket = io(
+  "https://twitter-llrs-chatroom.herokuapp.com/",
+  socketOptions
+);
 
 socket.onAny((event, ...args) => {
   console.log("main.js收到的資訊", event, args);
