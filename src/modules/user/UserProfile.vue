@@ -1,6 +1,7 @@
 ﻿<template>
   <div class="profile-wrapper">
     <!-- 沒cover產生空圖 -->
+
     <img :src="userObj.cover | emptyImage" alt="" class="background-pic" />
     <div class="profile-pic">
       <!-- 沒有上傳照片產生空圖 -->
@@ -46,23 +47,27 @@
         </div>
       </div>
     </div>
-    <div class="profile-details">
-      <p class="profile-name">{{ userObj.name }}</p>
-      <p class="profile-id">@{{ userObj.account }}</p>
-      <p class="description">
-        {{ userObj.introduction }}
-      </p>
-      <!-- todo api 沒有跟隨者與跟隨中使用者 -->
-      <router-link
-        :to="{ name: 'user-followings', params: { id: userObj.UserId } }"
-        class="profile-follow"
-        >{{ userObj.FollowingsCount }}個<span>跟隨中</span></router-link
-      >
-      <router-link
-        :to="{ name: 'user-followers', params: { id: userObj.UserId } }"
-        class="profile-follow"
-        >{{ userObj.FollowersCount }}位<span>跟隨者</span></router-link
-      >
+    <div class="loader" v-if="userObj.isLoading">
+      <i class="fas fa-spinner fa-spin fa-2x"></i>
+    </div>
+    <div v-else>
+      <div class="profile-details">
+        <p class="profile-name">{{ userObj.name }}</p>
+        <p class="profile-id">@{{ userObj.account }}</p>
+        <p class="description">
+          {{ userObj.introduction }}
+        </p>
+        <router-link
+          :to="{ name: 'user-followings', params: { id: userObj.UserId } }"
+          class="profile-follow"
+          >{{ userObj.FollowingsCount }}個<span>跟隨中</span></router-link
+        >
+        <router-link
+          :to="{ name: 'user-followers', params: { id: userObj.UserId } }"
+          class="profile-follow"
+          >{{ userObj.FollowersCount }}位<span>跟隨者</span></router-link
+        >
+      </div>
     </div>
   </div>
 </template>

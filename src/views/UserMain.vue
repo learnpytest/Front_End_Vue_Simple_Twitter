@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="container" v-if="!isProcessing">
+  <div class="container">
     <div class="new-tweet-modal" v-if="showModal">
       <NewTweetModal
         :initialShowModal="showModal"
@@ -35,10 +35,6 @@
       <div class="popular"><Popular /></div>
     </div>
   </div>
-
-  <!-- <div v-else-if="isProcessing" class="container" style="text-align: center">
-    <i class="fas fa-spinner fa-spin fa-2x"></i>
-  </div> -->
 </template>
 
 <script>
@@ -49,10 +45,9 @@ import Sidebar from "../modules/user/Sidebar.vue";
 import NewTweetModal from "../modules/user/NewTweetModal.vue";
 import ReplyTweetModal from "../modules/user/ReplyTweetModal.vue";
 
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
-import { GET_IS_PROCESSING } from "../store/store-types";
-import tweetsApi from "./../apis/tweets";
+import { SET_ALL_TWEETS, GET_ALL_TWEETS } from "../store/store-types";
 export default {
   components: {
     AddTweet,
@@ -66,17 +61,18 @@ export default {
     return {
       showModal: false,
       showReplyModal: false,
-      userTweets: [],
       replyTweetId: "",
     };
   },
   created() {
+    this.setAllTweets();
     this.getTweets();
+    console.log("created");
   },
 
   methods: {
-    async updateTweetsData() {
-      await this.getTweets();
+    updateTweetsData() {
+      this.getTweets();
     },
     modalToggle() {
       if (!this.showModal) {
@@ -85,12 +81,8 @@ export default {
         this.showModal = false;
       }
     },
-    async getTweets() {
+    getTweets() {
       try {
-        const response = await tweetsApi.getAllTweet();
-        const { data } = response;
-        this.userTweets = [...data];
-
         this.showModal = false;
       } catch (error) {
         console.log(error);
@@ -106,14 +98,12 @@ export default {
         this.showReplyModal = false;
       }
     },
+    ...mapActions({ setAllTweets: SET_ALL_TWEETS }),
   },
   computed: {
     ...mapGetters({
-      isProcessing: GET_IS_PROCESSING,
+      userTweets: GET_ALL_TWEETS,
     }),
-  },
-  watch: {
-    isProcessing: "getTweets",
   },
 };
 </script>

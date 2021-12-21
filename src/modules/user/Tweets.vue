@@ -1,9 +1,13 @@
 ﻿<template>
-  <!-- todo need to correct all detail for tweets after server provide fulfill tweet data -->
   <div class="tweets-wrapper">
+    <div class="loader" v-if="tweets.isLoading">
+      <i class="fas fa-spinner fa-spin fa-2x"></i>
+    </div>
+
     <div
+      v-else
       class="tweet"
-      v-for="(tweet, index) in tweets"
+      v-for="(tweet, index) in tweets.data"
       :key="index"
       @click.stop.prevent="
         () =>
@@ -73,7 +77,7 @@ export default {
   mixins: [mixinEmptyImage, mixinFromNowFilters],
   props: {
     initialTweets: {
-      type: Array,
+      type: Object,
       required: true,
     },
     initialShowReplyModal: {
@@ -85,12 +89,15 @@ export default {
   data() {
     return {
       showReplyModal: false,
-      tweets: [],
+      tweets: {
+        data: [],
+        isLoading: true,
+      },
     };
   },
   watch: {
     initialTweets(newValue) {
-      this.tweets = [...newValue];
+      this.tweets = { ...newValue };
     },
   },
 
@@ -109,7 +116,7 @@ export default {
           throw new Error(data.message);
         }
 
-        this.tweets = this.tweets.map((tweet) => {
+        this.tweets = this.tweets.data.map((tweet) => {
           if (tweet.TweetId === Number(tweetId)) {
             return {
               ...tweet,
@@ -130,7 +137,7 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        this.tweets = this.tweets.map((tweet) => {
+        this.tweets = this.tweets.data.map((tweet) => {
           if (tweet.TweetId === Number(tweetId)) {
             return {
               ...tweet,
@@ -155,6 +162,12 @@ export default {
 <style lang="scss" scoped>
 @import "./../../assets/scss/main.scss";
 @import "./../../assets/scss/tweet.scss";
+.loader {
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .tweets-wrapper {
   width: 100%;
 }

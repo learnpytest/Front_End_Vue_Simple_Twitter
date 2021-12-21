@@ -5,7 +5,6 @@ import {
 } from "../../main";
 
 import {
-  SET_IS_PROCESSING,
   ADD_NOTIFICATION,
   GET_ALL_TWEETS,
   SET_ALL_TWEETS,
@@ -19,7 +18,10 @@ import {
 } from "../store-types";
 
 const state = {
-  allTweets: [],
+  allTweets: {
+    data: [],
+    isLoading: true,
+  },
   oneUserTweets: [],
   oneUserReplies: [],
   oneUserLikes: [],
@@ -38,7 +40,6 @@ const actions = {
     dispatch
   }) => {
     try {
-      dispatch(SET_IS_PROCESSING, true);
       const res = await tweets.all();
       // send api to get reponse of unFiltered tweets and pass tweets to mutation to change state unFiltered the tweets
       // start
@@ -47,8 +48,11 @@ const actions = {
         statusText
       } = res;
       if (statusText !== "OK") throw new Error("statusText");
-      commit(SET_ALL_TWEETS, data);
-      dispatch(SET_IS_PROCESSING, false);
+      const tweetState = {
+        data,
+        isLoading: false,
+      };
+      commit(SET_ALL_TWEETS, tweetState);
     } catch (err) {
       setTimeout(() => {
         setTimeout(() => {
@@ -57,7 +61,6 @@ const actions = {
             message: "載入資料失敗，請重新登入",
           });
           vm.$router.push("/login");
-          dispatch(SET_IS_PROCESSING, false);
         }, 3000);
       }, 5000);
     }
@@ -117,9 +120,11 @@ const actions = {
   },
 };
 const mutations = {
-  [SET_ALL_TWEETS]: (state, allTweets) => {
-    // state.allTweets = [...state.allTweets, ...allTweets];
-    state.filteredTweets = [...allTweets];
+  [SET_ALL_TWEETS]: (state, tweetState) => {
+    // state.filteredTweets = [...allTweets];
+    state.allTweets = {
+      ...tweetState,
+    };
   },
   [SET_ONE_USER_TWEETS]: (state, oneUserTweets) => {
     // state.oneUserTweets = [...oneUserTweets];

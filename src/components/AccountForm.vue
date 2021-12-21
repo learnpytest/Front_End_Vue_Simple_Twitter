@@ -7,90 +7,97 @@
       <slot name="logo"> </slot>
       <slot name="header"></slot>
     </div>
-    <div class="form__group">
-      <label for="account">帳號</label>
-      <input
-        type="text"
-        id="account"
-        name="account"
-        :class="['form__input']"
-        v-model="account"
-        maxlength="20"
-        @input="updateAccountInfo"
-      />
+    <div class="loader" v-if="isLoading">
+      <i class="fas fa-spinner fa-spin fa-2x"></i>
+    </div>
+    <div v-else>
+      <div class="form__group">
+        <label for="account">帳號</label>
+        <input
+          type="text"
+          id="account"
+          name="account"
+          :class="['form__input']"
+          v-model="account"
+          maxlength="20"
+          @input="updateAccountInfo"
+        />
 
-      <div class="limit-error">
-        <!-- todo error message -->
-        <span class="warning-text" v-if="account.length >= 20"
-          >帳號字數不可超過 20 字</span
-        >
-        <p>{{ accountCharactersLeft }}</p>
+        <div class="limit-error">
+          <!-- todo error message -->
+          <span class="warning-text" v-if="account.length >= 20"
+            >帳號字數不可超過 20 字</span
+          >
+          <p>{{ accountCharactersLeft }}</p>
+        </div>
       </div>
-    </div>
-    <div class="form__group">
-      <label for="username">名稱</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        :class="['form__input']"
-        maxlength="50"
-        v-model="username"
-        @input="updateAccountInfo"
-      />
-      <div class="limit-error">
-        <!-- todo error message -->
-        <span class="warning-text" v-if="username.length >= 51"
-          >名稱字數不可超過 50 字</span
-        >
-        <p>{{ nameCharactersLeft }}</p>
+      <div class="form__group">
+        <label for="username">名稱</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          :class="['form__input']"
+          maxlength="50"
+          v-model="username"
+          @input="updateAccountInfo"
+        />
+        <div class="limit-error">
+          <!-- todo error message -->
+          <span class="warning-text" v-if="username.length >= 51"
+            >名稱字數不可超過 50 字</span
+          >
+          <p>{{ nameCharactersLeft }}</p>
+        </div>
       </div>
-    </div>
-    <div class="form__group">
-      <label for="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        :class="['form__input']"
-        v-model="email"
-        @input="updateAccountInfo"
-      />
-      <div>
-        <!-- todo error message -->
+      <div class="form__group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          :class="['form__input']"
+          v-model="email"
+          @input="updateAccountInfo"
+        />
+        <div>
+          <!-- todo error message -->
+        </div>
       </div>
-    </div>
-    <div class="form__group">
-      <label for="password">密碼</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        :class="['form__input']"
-        v-model="password"
-        @input="updateAccountInfo"
-      />
-      <div>
-        <!-- todo error message -->
+      <div class="form__group">
+        <label for="password">密碼</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          :class="['form__input']"
+          v-model="password"
+          @input="updateAccountInfo"
+        />
+        <div>
+          <!-- todo error message -->
+        </div>
       </div>
-    </div>
-    <div class="form__group">
-      <label for="checkPassword">確認密碼</label>
-      <input
-        type="password"
-        id="checkPassword"
-        name="checkPassword"
-        :class="['form__input']"
-        v-model="checkPassword"
-        @input="updateAccountInfo"
-      />
-      <div>
-        <!-- todo error message -->
+      <div class="form__group">
+        <label for="checkPassword">確認密碼</label>
+        <input
+          type="password"
+          id="checkPassword"
+          name="checkPassword"
+          :class="['form__input']"
+          v-model="checkPassword"
+          @input="updateAccountInfo"
+        />
+        <div>
+          <!-- todo error message -->
+        </div>
       </div>
-    </div>
-    <slot name="button"></slot>
-    <div class="form__links">
-      <slot name="cancel"></slot>
+
+      <slot name="button"></slot>
+
+      <div class="form__links">
+        <slot name="cancel"></slot>
+      </div>
     </div>
   </form>
 </template>
@@ -111,6 +118,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       account: "",
       username: "",
       email: "",
@@ -119,13 +127,6 @@ export default {
     };
   },
   created() {
-    // this.account = this.isSettingExistingAccount
-    //   ? this.getCurrentUser.account
-    //   : "";
-    // this.username = this.isSettingExistingAccount
-    //   ? this.getCurrentUser.name
-    //   : "";
-    // this.email = this.isSettingExistingAccount ? this.getCurrentUser.email : "";
     this.fetchData();
   },
   methods: {
@@ -136,17 +137,14 @@ export default {
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-        this.currentUser = data;
-        this.account = this.isSettingExistingAccount
-          ? this.currentUser.account
-          : "";
-        this.username = this.isSettingExistingAccount
-          ? this.currentUser.name
-          : "";
-        this.email = this.isSettingExistingAccount
-          ? this.currentUser.email
-          : "";
+        const currentUser = data;
+        this.account = this.isSettingExistingAccount ? currentUser.account : "";
+        this.username = this.isSettingExistingAccount ? currentUser.name : "";
+        this.email = this.isSettingExistingAccount ? currentUser.email : "";
+        this.isLoading = false;
       } catch (err) {
+        this.isLoading = false;
+
         console.log(err);
       }
     },
@@ -191,13 +189,14 @@ export default {
   font-family: var(--ff-primary);
   margin: 0 auto;
   max-width: 540px;
-  // width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 4rem;
-
+  > * {
+    width: 100%;
+  }
   &__title {
     width: 100%;
     padding: 0.8rem 0 0 0;
@@ -215,9 +214,6 @@ export default {
   }
 
   &__group {
-    // width: 540px;
-    // max-width: 70%;
-    width: 100%;
     margin-bottom: 1.9rem;
     @include grays(color, g-600);
     font-size: 1rem;
@@ -228,6 +224,7 @@ export default {
     font-size: 12px;
     margin: 5px;
   }
+
   &__group + &__group {
     margin-bottom: 2.7rem;
   }
@@ -244,7 +241,9 @@ export default {
   }
   &__links {
     display: flex;
-    justify-content: flex-end;
+    // justify-content: flex-end;
+    justify-content: center;
+
     padding-bottom: 5rem;
     .link--login {
       @include grays(color, b-1000);

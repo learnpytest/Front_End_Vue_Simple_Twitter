@@ -1,8 +1,5 @@
 ﻿<template>
   <div class="container">
-    <!-- <div v-if="isLoading" class="container" style="text-align: center">
-      <i class="fas fa-spinner fa-spin fa-2x"></i>
-    </div> -->
     <div class="new-tweet-modal" v-if="showModal">
       <NewTweetModal
         :initialShowModal="showModal"
@@ -108,11 +105,19 @@ export default {
       showEditModal: false,
       showReplyModal: false,
 
-      userTweets: [],
+      userTweets: {
+        data: [],
+        isLoading: true,
+      },
       userId: "",
-      userObj: {},
+      userObj: {
+        isLoading: true,
+      },
       userRepliesTweets: [],
-      userLikes: [],
+      userLikes: {
+        data: [],
+        isLoading: true,
+      },
       replyTweetId: "",
       isLoading: false,
     };
@@ -167,7 +172,6 @@ export default {
         const currentUserIdForCheck = data.id;
         if (currentUserIdForCheck === this.userObj.UserId) {
           // 判斷this.userObj.UserId如果是當前使用者要做下面的事
-          console.log(followingId, "currentuser");
           let FollowingsCount = this.userObj.FollowingsCount - 1;
           this.userObj = { ...this.userObj, FollowingsCount };
           return;
@@ -197,16 +201,14 @@ export default {
 
     async getUserLikes(userId) {
       try {
-        this.isLoading = true;
         const res = await usersAPI.getUserLikes(userId);
         const { data, statusText } = res;
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-        this.userLikes = [...data];
-        this.isLoading = false;
+        this.userLikes = { data: [...data], isLoading: false };
       } catch (err) {
-        this.isLoading = false;
+        this.userLikes.isLoading = false;
 
         console.log(err);
       }
@@ -230,38 +232,32 @@ export default {
     },
     async fetchUser(userId) {
       try {
-        this.isLoading = true;
-
         const res = await usersAPI.getUser(userId);
         const { data, statusText } = res;
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-        this.userObj = { ...data };
+        this.userObj = { ...data, isLoading: false };
 
         this.showModal = false;
-        this.isLoading = false;
       } catch (err) {
-        this.isLoading = false;
+        this.userObj.isLoading = false;
 
         console.log(err);
       }
     },
     async getUsersTweets(userId) {
       try {
-        this.isLoading = true;
-
         const response = await tweetsApi.getOneUserTweet(userId);
         const { data, statusText } = response;
 
         if (statusText !== "OK") {
           throw new Error(data.message);
         }
-        this.userTweets = [...data];
+        this.userTweets = { data: [...data], isLoading: false };
         this.showModal = false;
-        this.isLoading = false;
       } catch (error) {
-        this.isLoading = false;
+        this.userTweets.isLoading = false;
 
         console.log("error", error);
       }

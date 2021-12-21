@@ -1,7 +1,15 @@
 ﻿<template>
   <div class="popular-wrapper">
     <div class="popular-header">Popular</div>
-    <div class="popular-card" v-for="user in getTopUsers" :key="user.UserId">
+    <div class="loader" v-if="getTopUsers.isLoading">
+      <i class="fas fa-spinner fa-spin fa-2x"></i>
+    </div>
+    <div
+      v-else
+      class="popular-card"
+      v-for="user in getTopUsers.data"
+      :key="user.UserId"
+    >
       <!-- 沒有上傳照片產生空圖 -->
       <img
         :src="user.avatar | emptyImage"
@@ -55,9 +63,9 @@ export default {
       currentUserId: "",
     };
   },
-  created() {
-    this.setTopUsers();
-    this.getCurrentUser();
+  async created() {
+    await this.getCurrentUser();
+    await this.setTopUsers();
   },
   methods: {
     cancel(followingId) {
@@ -103,6 +111,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "./../../assets/scss/main.scss";
+
 .popular-wrapper {
   background-color: $gray-50;
   border-radius: 10px;

@@ -4,67 +4,73 @@
     @click.stop.prevent="handleCommentSubmit(tweet.TweetId)"
   >
     <div class="new-text-box">
-      <div class="close-btn">
-        <button>
-          <img
-            src="./../../assets/images/icon_close.svg"
-            alt=""
-            @click="handleShowModalClick"
-          />
-        </button>
+      <div class="loader" v-if="tweet.isLoading">
+        <i class="fas fa-spinner fa-spin fa-2x"></i>
       </div>
-      <div class="to-reply-user">
-        <div class="to-reply-user_pic">
-          <img
-            class="user-pic"
-            :src="tweet.User && tweet.User.avatar | emptyImage"
-            alt=""
-          />
-          <div class="connecting-line"></div>
+      <div v-else>
+        <div class="close-btn">
+          <button>
+            <img
+              src="./../../assets/images/icon_close.svg"
+              alt=""
+              @click="handleShowModalClick"
+            />
+          </button>
         </div>
-        <div class="to-reply-user-info">
-          <div class="to-reply-user-info_info">
-            <p class="to-reply-user-name">
-              {{ tweet.User && tweet.User.name }}
-              <span>@{{ tweet.User && tweet.User.account }} • </span
-              ><span>{{ tweet && tweet.createdAt | fromNow }}</span>
+
+        <div class="to-reply-user">
+          <div class="to-reply-user_pic">
+            <img
+              class="user-pic"
+              :src="tweet.User && tweet.User.avatar | emptyImage"
+              alt=""
+            />
+            <div class="connecting-line"></div>
+          </div>
+          <div class="to-reply-user-info">
+            <div class="to-reply-user-info_info">
+              <p class="to-reply-user-name">
+                {{ tweet.User && tweet.User.name }}
+                <span>@{{ tweet.User && tweet.User.account }} • </span
+                ><span>{{ tweet && tweet.createdAt | fromNow }}</span>
+              </p>
+            </div>
+            <div class="to-reply-user-tweet_text">
+              {{ tweet && tweet.description }}
+            </div>
+            <p class="reply-to">
+              回覆給 <span>@{{ tweet.User && tweet.User.account }}</span>
             </p>
           </div>
-          <div class="to-reply-user-tweet_text">
-            {{ tweet && tweet.description }}
+        </div>
+
+        <div class="text-box">
+          <div class="user-info">
+            <img
+              class="user-pic"
+              :src="currentUser && currentUser.avatar | emptyImage"
+              alt=""
+            />
           </div>
-          <p class="reply-to">
-            回覆給 <span>@{{ tweet.User && tweet.User.account }}</span>
-          </p>
+          <div class="text-area">
+            <textarea
+              class="form-control"
+              rows="3"
+              v-model="text"
+              maxlength="141"
+              placeholder="推你的回覆"
+              @click.stop.prevent="resetEmpty"
+            /><span class="limiter">{{ charactersLeft }}</span>
+          </div>
         </div>
-      </div>
 
-      <div class="text-box">
-        <div class="user-info">
-          <img
-            class="user-pic"
-            :src="currentUser && currentUser.avatar | emptyImage"
-            alt=""
-          />
+        <div class="tweet-btn">
+          <p class="error-txt" v-if="text.length >= 140">字數不可超過 140 字</p>
+          <p class="error-txt" v-if="submitEmptyField">內容不可空白</p>
+          <button type="submit" class="save-btn" :disabled="isProcessing">
+            {{ isProcessing ? "發送中..." : "推文" }}
+          </button>
         </div>
-        <div class="text-area">
-          <textarea
-            class="form-control"
-            rows="3"
-            v-model="text"
-            maxlength="141"
-            placeholder="推你的回覆"
-            @click.stop.prevent="resetEmpty"
-          /><span class="limiter">{{ charactersLeft }}</span>
-        </div>
-      </div>
-
-      <div class="tweet-btn">
-        <p class="error-txt" v-if="text.length >= 140">字數不可超過 140 字</p>
-        <p class="error-txt" v-if="submitEmptyField">內容不可空白</p>
-        <button type="submit" class="save-btn" :disabled="isProcessing">
-          {{ isProcessing ? "發送中..." : "推文" }}
-        </button>
       </div>
     </div>
   </form>
@@ -94,7 +100,7 @@ export default {
       showReplyModal: false,
       text: "",
       tweetId: "",
-      tweet: {},
+      tweet: { isLoading: true },
       submitEmptyField: false,
       currentUser: {},
     };
@@ -113,8 +119,9 @@ export default {
       try {
         const response = await tweetsAPI.getTweet(tweetId);
         const { data } = response;
-        this.tweet = { ...data };
+        this.tweet = { ...data, isLoading: false };
       } catch (error) {
+        this.tweet.isLoading = false;
         console.log("error", error);
       }
     },

@@ -1,6 +1,8 @@
 import usersAPI from "../../apis/usersAPI";
 
-import { vm } from "../../main";
+import {
+  vm
+} from "../../main";
 
 import {
   GET_CURRENT_USER,
@@ -16,32 +18,49 @@ const state = {
 
   token: "",
   isAuthenticated: false,
-  topUsers: [],
+  topUsers: {
+    data: [],
+    isLoading: true,
+  },
 };
 const getters = {
   [GET_CURRENT_USER]: (state) => state.currentUser,
   [GET_TOP_USERS]: (state) => state.topUsers,
 };
 const actions = {
-  [REVOKE_AUTHENTICATION]: async ({ commit, dispatch }) => {
+  [REVOKE_AUTHENTICATION]: async ({
+    commit,
+    dispatch
+  }) => {
     commit(REVOKE_AUTHENTICATION);
     dispatch(ADD_NOTIFICATION, {
       type: "success",
       message: "成功登出",
     });
   },
-  [SET_CURRENT_USER]: async ({ commit }, currentUser) => {
+  [SET_CURRENT_USER]: async ({
+    commit
+  }, currentUser) => {
     commit(SET_CURRENT_USER, currentUser);
   },
-  [SET_TOP_USERS]: async ({ commit }) => {
+  [SET_TOP_USERS]: async ({
+    commit
+  }) => {
     // send api
     try {
       const res = await usersAPI.getTop();
-      const { data, statusText } = res;
+      const {
+        data,
+        statusText
+      } = res;
       if (statusText !== "OK") {
         throw new Error(statusText);
       }
-      commit(SET_TOP_USERS, data);
+      const topUserState = {
+        data,
+        isLoading: false,
+      };
+      commit(SET_TOP_USERS, topUserState);
     } catch (err) {
       throw new Error(err);
     }
@@ -62,8 +81,10 @@ const mutations = {
     state.token = localStorage.getItem("token");
     state.isAuthenticated = true;
   },
-  [SET_TOP_USERS]: async (state, topUsers) => {
-    state.topUsers = [...topUsers];
+  [SET_TOP_USERS]: async (state, topUserState) => {
+    state.topUsers = {
+      ...topUserState,
+    };
   },
 };
 

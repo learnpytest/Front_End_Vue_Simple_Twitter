@@ -1,105 +1,114 @@
 ﻿<template>
   <form class="user-edit-modal" @submit.stop.prevent="handleSubmit">
     <div class="user-edit-box">
-      <div class="header-btn">
-        <img
-          src="./../../assets/images/icon_close.svg"
-          alt=""
-          @click="handleShowModalClick"
-        />
-        <p class="header-text">編輯個人資料</p>
-        <button type="submit" class="save-btn" :disabled="isProcessing">
-          {{ isProcessing ? "處理中..." : "儲存" }}
-        </button>
+      <div class="loader" v-if="userObj.isLoading">
+        <i class="fas fa-spinner fa-spin fa-2x"></i>
       </div>
-      <div class="background-pic">
-        <img :src="userCover" alt="" />
-
-        <div class="pic-btn-control">
-          <label for="cover">
-            <img
-              src="./../../assets/images/icon_uploadPhoto.png"
-              alt=""
-              id="upload-btn"
-            />
-          </label>
-          <input
-            type="file"
-            id="cover"
-            name="cover"
-            accept="image/png, image/jpeg"
-            style="width: 0"
-            @change="handleCoverFileChange"
-          />
+      <div v-else>
+        <div class="header-btn">
           <img
-            src="./../../assets/images/icon_delete.png"
+            src="./../../assets/images/icon_close.svg"
             alt=""
-            id="delete-btn"
-            @click="deleteCover"
+            @click="handleShowModalClick"
           />
+          <p class="header-text">編輯個人資料</p>
+          <button type="submit" class="save-btn" :disabled="isProcessing">
+            {{ isProcessing ? "處理中..." : "儲存" }}
+          </button>
         </div>
-      </div>
-      <div class="edit-profile-pic">
-        <div class="profile-pic">
-          <div class="profile-pic-wrapper">
-            <!-- <img :src="fetchCurrentUser.avatar" alt="" class="" /> -->
-            <label for="avatar">
-              <img :src="userAvatar" alt="" class="userAvatar" />
+        <div class="background-pic">
+          <img :src="userObj.cover | emptyImage" alt="" />
+
+          <div class="pic-btn-control">
+            <label for="cover">
               <img
                 src="./../../assets/images/icon_uploadPhoto.png"
                 alt=""
-                class="asd"
+                id="upload-btn"
               />
             </label>
             <input
               type="file"
-              id="avatar"
-              name="avatar"
+              id="cover"
+              name="cover"
               accept="image/png, image/jpeg"
               style="width: 0"
-              @change="handleAvatarFileChange"
+              @change="handleCoverFileChange"
+            />
+            <img
+              src="./../../assets/images/icon_delete.png"
+              alt=""
+              id="delete-btn"
+              @click="deleteCover"
             />
           </div>
         </div>
-      </div>
-      <div class="form__groups">
-        <div class="form__group">
-          <label for="name">名稱</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            v-model="userObj.name"
-            maxlength="50"
-          />
-          <div class="limit-error">
-            <!-- todo error message -->
-            <span class="warning-text" v-if="userName.length >= 50"
-              >名稱字數不可超過 50 字</span
-            >
-            <span v-if="submitEmptyField" class="warning-text"
-              >內容不可空白</span
-            >
-            <p>{{ nameCharactersLeft }}</p>
-            <!-- <span class="limiter">{{ charactersLeft() }}</span> -->
+        <div class="edit-profile-pic">
+          <div class="profile-pic">
+            <div class="profile-pic-wrapper">
+              <!-- <img :src="fetchCurrentUser.avatar" alt="" class="" /> -->
+              <label for="avatar">
+                <img
+                  :src="userObj.avatar | emptyImage"
+                  alt=""
+                  class="userAvatar"
+                />
+                <img
+                  src="./../../assets/images/icon_uploadPhoto.png"
+                  alt=""
+                  class="asd"
+                />
+              </label>
+              <input
+                type="file"
+                id="avatar"
+                name="avatar"
+                accept="image/png, image/jpeg"
+                style="width: 0"
+                @change="handleAvatarFileChange"
+              />
+            </div>
           </div>
         </div>
-        <div class="form__group">
-          <label for="bio">自我介紹</label>
-          <input
-            type="bio"
-            id="bio"
-            name="introduction"
-            row="2"
-            v-model="userIntroduction"
-            maxlength="160"
-          />
-          <div class="limit-error">
-            <!-- todo error message -->
-            <span class="warning-text" v-if="userIntroduction.length >= 160"
-              >自我介紹字數不可超過 160 字</span
-            >
-            <p>{{ introCharactersLeft }}</p>
+        <div class="form__groups">
+          <div class="form__group">
+            <label for="name">名稱</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              v-model="userObj.name"
+              maxlength="50"
+            />
+            <div class="limit-error">
+              <!-- todo error message -->
+              <span class="warning-text" v-if="userName.length >= 50"
+                >名稱字數不可超過 50 字</span
+              >
+              <span v-if="submitEmptyField" class="warning-text"
+                >內容不可空白</span
+              >
+              <p>{{ nameCharactersLeft }}</p>
+              <!-- <span class="limiter">{{ charactersLeft() }}</span> -->
+            </div>
+          </div>
+          <div class="form__group">
+            <label for="bio">自我介紹</label>
+            <input
+              type="bio"
+              id="bio"
+              name="introduction"
+              row="2"
+              v-model="userIntroduction"
+              maxlength="160"
+            />
+            <div class="limit-error">
+              <!-- todo error message -->
+              <span class="warning-text" v-if="userIntroduction.length >= 160"
+                >自我介紹字數不可超過 160 字</span
+              >
+              <p>{{ introCharactersLeft }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -121,10 +130,6 @@ export default {
       type: Boolean,
       required: true,
     },
-    // initialUserObj: {
-    //   type: Object,
-    //   required: true,
-    // },
   },
   data() {
     return {
@@ -138,7 +143,7 @@ export default {
 
       submitEmptyField: false,
 
-      userObj: {},
+      userObj: { isLoading: true },
     };
   },
   created() {
@@ -197,17 +202,9 @@ export default {
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-        this.userObj = { ...data };
-
-        // const { id, name, cover, avatar, introduction } = this.userObj;
-        // [
-        //   this.userId,
-        //   this.userName,
-        //   this.userCover,
-        //   this.userAvatar,
-        //   this.userIntroduction,
-        // ] = [id, name, cover, avatar, introduction];
+        this.userObj = { ...data, isLoading: false };
       } catch (err) {
+        this.userObj.isLoading = true;
         console.log(err);
       }
       this.showEditModal = this.initialEditModal;

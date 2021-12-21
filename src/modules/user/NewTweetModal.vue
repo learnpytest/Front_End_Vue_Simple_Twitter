@@ -1,35 +1,40 @@
 ﻿<template>
   <form class="new-tweet-modal" @submit.stop.prevent="handleTweetSubmit">
     <div class="new-text-box">
-      <div class="close-btn">
-        <button>
-          <img
-            src="./../../assets/images/icon_close.svg"
-            alt=""
-            @click="handleShowModalClick"
-          />
-        </button>
+      <div class="loader" v-if="isLoading">
+        <i class="fas fa-spinner fa-spin fa-2x"></i>
       </div>
-      <div class="text-box">
-        <div class="user-info">
-          <!-- 沒有上傳照片產生空圖 -->
-          <img class="user-pic" :src="currentUserPic | emptyImage" alt="" />
+      <div v-else>
+        <div class="close-btn">
+          <button>
+            <img
+              src="./../../assets/images/icon_close.svg"
+              alt=""
+              @click="handleShowModalClick"
+            />
+          </button>
         </div>
-        <div class="text-area">
-          <textarea
-            class="form-control"
-            rows="3"
-            v-model="text"
-            maxlength="141"
-            placeholder="有什麽新鮮事？"
-            @click.stop.prevent="resetEmpty"
-          /><span class="limiter">{{ charactersLeft }}</span>
+        <div class="text-box">
+          <div class="user-info">
+            <!-- 沒有上傳照片產生空圖 -->
+            <img class="user-pic" :src="currentUserPic | emptyImage" alt="" />
+          </div>
+          <div class="text-area">
+            <textarea
+              class="form-control"
+              rows="3"
+              v-model="text"
+              maxlength="141"
+              placeholder="有什麽新鮮事？"
+              @click.stop.prevent="resetEmpty"
+            /><span class="limiter">{{ charactersLeft }}</span>
+          </div>
         </div>
-      </div>
-      <div class="tweet-btn">
-        <p v-if="text.length >= 140">字數不可超過 140 字</p>
-        <p v-if="submitEmptyField">內容不可空白</p>
-        <button>推文</button>
+        <div class="tweet-btn">
+          <p v-if="text.length >= 140">字數不可超過 140 字</p>
+          <p v-if="submitEmptyField">內容不可空白</p>
+          <button>推文</button>
+        </div>
       </div>
     </div>
   </form>
@@ -56,6 +61,7 @@ export default {
       currentUserId: "",
       submitEmptyField: false,
       currentUserPic: {},
+      isLoading: true,
     };
   },
   created() {
@@ -72,7 +78,10 @@ export default {
         const { avatar, id } = response.data;
         this.currentUserId = id;
         this.currentUserPic = avatar;
+        this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
+
         console.log("error", error);
       }
     },
