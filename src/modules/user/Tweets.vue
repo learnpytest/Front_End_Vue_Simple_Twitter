@@ -96,8 +96,11 @@ export default {
     };
   },
   watch: {
-    initialTweets(newValue) {
-      this.tweets = { ...newValue };
+    initialTweets: {
+      handler(newValue) {
+        this.tweets = { ...newValue };
+      },
+      deep: true,
     },
   },
 

@@ -1,6 +1,14 @@
 ﻿<template>
   <div class="comment-wrapper">
-    <div class="comment" v-for="tweet in tweets" :key="tweet.ReplyID">
+    <div class="loader" v-if="tweets.isLoading">
+      <i class="fas fa-spinner fa-spin fa-2x"></i>
+    </div>
+    <div
+      v-else
+      class="comment"
+      v-for="tweet in tweets.data"
+      :key="tweet.ReplyID"
+    >
       <div
         class="user-pic"
         @click.stop.prevent="
@@ -46,7 +54,7 @@ export default {
   name: "Comments",
   props: {
     initialTweets: {
-      type: Array,
+      type: Object,
       required: true,
     },
     parentTweet: {
@@ -57,17 +65,20 @@ export default {
   data() {
     return {
       showReplyModal: false,
-      tweets: [],
+      tweets: { data: [], isLoading: true },
     };
   },
   watch: {
-    initialTweets(newValue) {
-      this.tweets = [...this.tweets, ...newValue];
+    initialTweets: {
+      handler(newValue) {
+        this.tweets = { ...newValue };
+      },
+      deep: true,
     },
   },
   methods: {
     fetchData() {
-      this.tweets = this.initialTweets;
+      this.tweets = { ...this.initialTweets };
     },
   },
 

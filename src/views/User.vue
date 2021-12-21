@@ -113,7 +113,10 @@ export default {
       userObj: {
         isLoading: true,
       },
-      userRepliesTweets: [],
+      userRepliesTweets: {
+        data: [],
+        isLoading: true,
+      },
       userLikes: {
         data: [],
         isLoading: true,
@@ -131,8 +134,14 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     // 路由改變時重新更新使用者資料
+
     const { id } = to.params;
     this.fetchUser(id);
+    this.getUsersTweets(id);
+    this.getUserRepliesTweets(id);
+
+    this.getUserLikes(id);
+
     next();
   },
   methods: {
@@ -214,24 +223,23 @@ export default {
       }
     },
     async getUserRepliesTweets(userId) {
-      this.isLoading = true;
-
       try {
+        this.userRepliesTweets.isLoading = true;
         const res = await usersAPI.getUserRepliesTweets(userId);
         const { data, statusText } = res;
         if (statusText !== "OK") {
           throw new Error(statusText);
         }
-        this.userRepliesTweets = [...data];
-        this.isLoading = false;
+        this.userRepliesTweets = { ...data, isLoading: false };
       } catch (err) {
-        this.isLoading = false;
+        this.userRepliesTweets.isLoading = false;
 
         console.log(err);
       }
     },
     async fetchUser(userId) {
       try {
+        this.userObj.isLoading = true;
         const res = await usersAPI.getUser(userId);
         const { data, statusText } = res;
         if (statusText !== "OK") {
@@ -248,6 +256,8 @@ export default {
     },
     async getUsersTweets(userId) {
       try {
+        this.userTweets.isLoading = true;
+
         const response = await tweetsApi.getOneUserTweet(userId);
         const { data, statusText } = response;
 
